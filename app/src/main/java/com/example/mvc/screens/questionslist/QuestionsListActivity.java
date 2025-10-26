@@ -1,6 +1,7 @@
 package com.example.mvc.screens.questionslist;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class QuestionsListActivity extends BaseActivity implements
                 .enqueue(new Callback<QuestionsListResponseSchema>() {
                     @Override
                     public void onResponse(Call<QuestionsListResponseSchema> call, Response<QuestionsListResponseSchema> response) {
+                        Log.e("response",""+response.body());
                         if (response.isSuccessful()) {
                             bindQuestions(response.body().getQuestions());
                         } else {
@@ -66,6 +68,7 @@ public class QuestionsListActivity extends BaseActivity implements
                     @Override
                     public void onFailure(Call<QuestionsListResponseSchema> call, Throwable t) {
                         networkCallFailed();
+                        Log.e("response Throwable",""+t);
                     }
                 } );
     }
