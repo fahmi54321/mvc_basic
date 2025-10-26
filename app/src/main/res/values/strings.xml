@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">mvc</string>
+    <string name="error_network_call_failed">network call failed</string>
+</resources>
