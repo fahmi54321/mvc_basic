@@ -43,12 +43,7 @@ public class QuestionsListAdapter extends ArrayAdapter<Question> {
         txtTitle.setText(question.getTitle());
 
         // set listener
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onQuestionClicked(question);
-            }
-        });
+        convertView.setOnClickListener(view -> onQuestionClicked(question));
 
         return convertView;
     }
