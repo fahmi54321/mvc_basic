@@ -2,7 +2,7 @@ package com.example.mvc.screens.questionslist;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
+import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.example.mvc.R;
@@ -22,34 +22,36 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class QuestionsListActivity extends BaseActivity implements
-        QuestionsListAdapter.OnQuestionClickListener {
+public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvcImpl.Listener {
 
     private StackoverflowApi mStackoverflowApi;
 
-    private ListView mLstQuestions;
-    private QuestionsListAdapter mQuestionsListAdapter;
+    private QuestionsListViewMvc mViewMvc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_questions_list);
-
-        mLstQuestions = findViewById(R.id.lst_questions);
-        mQuestionsListAdapter = new QuestionsListAdapter(this, this);
-        mLstQuestions.setAdapter(mQuestionsListAdapter);
+        mViewMvc = new QuestionsListViewMvcImpl(LayoutInflater.from(this),null);
+        mViewMvc.registerListener(this);
 
         mStackoverflowApi = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(StackoverflowApi.class);
+        setContentView(mViewMvc.getRootView());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         fetchQuestions();
+    }
+
+    @Override
+    protected void onStop() {
+        mViewMvc.unregisterListener(this);
+        super.onStop();
     }
 
     private void fetchQuestions() {
@@ -78,9 +80,7 @@ public class QuestionsListActivity extends BaseActivity implements
         for (QuestionSchema questionSchema : questionSchemas) {
             questions.add(new Question(questionSchema.getId(), questionSchema.getTitle()));
         }
-        mQuestionsListAdapter.clear();
-        mQuestionsListAdapter.addAll(questions);
-        mQuestionsListAdapter.notifyDataSetChanged();
+        mViewMvc.bindQuestions(questions);
     }
 
     private void networkCallFailed() {
