@@ -1,20 +1,20 @@
-package com.example.mvc.screens.questionslist;
+package com.example.mvc.screens.questionslist.adapter.listview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mvc.R;
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.questionslist.QuestionsListItemMvcImpl;
+import com.example.mvc.screens.questionslist.QuestionsListItemViewMvc;
 
 
-public class QuestionsListAdapter extends ArrayAdapter<Question> implements QuestionsListItemViewMvc.Listener {
+public class QuestionsListViewAdapter extends ArrayAdapter<Question> implements QuestionsListItemViewMvc.Listener {
 
     private final OnQuestionClickListener mOnQuestionClickListener;
 
@@ -27,8 +27,8 @@ public class QuestionsListAdapter extends ArrayAdapter<Question> implements Ques
         void onQuestionClicked(Question question);
     }
 
-    public QuestionsListAdapter(Context context,
-                                OnQuestionClickListener onQuestionClickListener) {
+    public QuestionsListViewAdapter(Context context,
+                                    OnQuestionClickListener onQuestionClickListener) {
         super(context, 0);
         mOnQuestionClickListener = onQuestionClickListener;
     }
@@ -37,7 +37,7 @@ public class QuestionsListAdapter extends ArrayAdapter<Question> implements Ques
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            QuestionsListItemViewMvc viewMvc = new QuestionsListItemViewMvcImpl(
+            QuestionsListItemViewMvc viewMvc = new QuestionsListItemMvcImpl(
                     LayoutInflater.from(getContext()),
                     parent
             );

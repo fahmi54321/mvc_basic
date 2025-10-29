@@ -1,4 +1,4 @@
-package com.example.mvc.screens.questionslist;
+package com.example.mvc.screens.questionslist.listview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,21 +8,23 @@ import android.widget.ListView;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
+import com.example.mvc.screens.questionslist.adapter.listview.QuestionsListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionsListViewMvcImpl implements QuestionsListAdapter.OnQuestionClickListener, QuestionsListViewMvc {
+public class QuestionsListViewMvcImpl implements QuestionsListViewAdapter.OnQuestionClickListener, QuestionsListViewMvc {
 
     private final List<Listener> mListeners = new ArrayList<>(1);
     private final View rootView;
     private final ListView mLstQuestions;
-    private final QuestionsListAdapter mQuestionsListAdapter;
+    private final QuestionsListViewAdapter mQuestionsListViewAdapter;
     public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup) {
         rootView = layoutInflater.inflate(R.layout.layout_questions_list,viewGroup, false);
         mLstQuestions = findViewById(R.id.lst_questions);
-        mQuestionsListAdapter = new QuestionsListAdapter(getContext(), this);
-        mLstQuestions.setAdapter(mQuestionsListAdapter);
+        mQuestionsListViewAdapter = new QuestionsListViewAdapter(getContext(), this);
+        mLstQuestions.setAdapter(mQuestionsListViewAdapter);
     }
 
     @Override
@@ -56,8 +58,8 @@ public class QuestionsListViewMvcImpl implements QuestionsListAdapter.OnQuestion
 
     @Override
     public void bindQuestions(List<Question> questions) {
-        mQuestionsListAdapter.clear();
-        mQuestionsListAdapter.addAll(questions);
-        mQuestionsListAdapter.notifyDataSetChanged();
+        mQuestionsListViewAdapter.clear();
+        mQuestionsListViewAdapter.addAll(questions);
+        mQuestionsListViewAdapter.notifyDataSetChanged();
     }
 }

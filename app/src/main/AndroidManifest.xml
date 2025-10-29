@@ -15,7 +15,11 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Mvc">
         <activity
-            android:name=".screens.questionslist.QuestionsListActivity"
+            android:name=".screens.questionslist.listview.QuestionsListActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".screens.questionslist.recycler.QuestionsRecyclerListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.mvc.screens.questionslist;
+package com.example.mvc.screens.questionslist.listview;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,7 @@ import com.example.mvc.networking.QuestionsListResponseSchema;
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.Question;
 import com.example.mvc.screens.common.BaseActivity;
+import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvcImpl.Listener {
+public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvc.Listener {
 
     private StackoverflowApi mStackoverflowApi;
 

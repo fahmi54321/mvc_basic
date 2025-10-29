@@ -11,7 +11,7 @@ import com.example.mvc.questions.Question;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionsListItemViewMvcImpl implements  QuestionsListItemViewMvc {
+public class QuestionsListItemMvcImpl implements QuestionsListItemViewMvc {
 
     View mRootView;
 
@@ -19,7 +19,7 @@ public class QuestionsListItemViewMvcImpl implements  QuestionsListItemViewMvc {
     private Question mQuestion;
     private TextView mTxtTitle;
 
-    public QuestionsListItemViewMvcImpl(LayoutInflater layoutInflater, ViewGroup parent) {
+    public QuestionsListItemMvcImpl(LayoutInflater layoutInflater, ViewGroup parent) {
         mRootView = layoutInflater.inflate(R.layout.layout_question_list_item, parent, false);
         mTxtTitle = findViewById(R.id.txt_title);
 
