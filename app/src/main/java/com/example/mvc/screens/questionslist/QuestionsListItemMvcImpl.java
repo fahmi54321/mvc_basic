@@ -6,13 +6,13 @@ import android.widget.TextView;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.common.BaseObservableViewMvc;
 import com.example.mvc.screens.common.BaseViewMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionsListItemMvcImpl extends BaseViewMvc implements QuestionsListItemViewMvc {
-    private final List<Listener> mListeners = new ArrayList<>(1);
+public class QuestionsListItemMvcImpl extends BaseObservableViewMvc<QuestionsListItemViewMvc.Listener> implements QuestionsListItemViewMvc {
     private Question mQuestion;
     private TextView mTxtTitle;
 
@@ -21,20 +21,10 @@ public class QuestionsListItemMvcImpl extends BaseViewMvc implements QuestionsLi
         mTxtTitle = findViewById(R.id.txt_title);
 
         getRootView().setOnClickListener(v -> {
-            for(Listener listener: mListeners){
+            for(Listener listener: getListeners()){
                 listener.onQuestionClicked(mQuestion);
             }
         });
-    }
-
-    @Override
-    public void registerListener(Listener listener) {
-        mListeners.add(listener);
-    }
-
-    @Override
-    public void unregisterListener(Listener listener) {
-        mListeners.remove(listener);
     }
 
     @Override

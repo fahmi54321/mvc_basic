@@ -11,23 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.common.BaseObservableViewMvc;
+import com.example.mvc.screens.common.ObservableViewMvc;
 import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.adapter.recycler.QuestionsRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionsRecyclerMvcImpl implements QuestionsListViewMvc, QuestionsRecyclerAdapter.Listener {
+public class QuestionsRecyclerMvcImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewMvc, QuestionsRecyclerAdapter.Listener {
 
-    private RecyclerView mRecyclerQuestions;
-    private QuestionsRecyclerAdapter mAdapter;
-
-    private final View mRootView;
-
-    private final List<Listener> mListeners = new ArrayList<>(1);
+    private final RecyclerView mRecyclerQuestions;
+    private final QuestionsRecyclerAdapter mAdapter;
 
     public QuestionsRecyclerMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent) {
-        mRootView = inflater.inflate(R.layout.layout_questions_list_recycler, parent, false);
+        setRootView(inflater.inflate(R.layout.layout_questions_list_recycler, parent, false));
 
         mRecyclerQuestions = findViewById(R.id.recycler_questions);
         mRecyclerQuestions.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -36,31 +34,8 @@ public class QuestionsRecyclerMvcImpl implements QuestionsListViewMvc, Questions
     }
 
     @Override
-    public View getRootView() {
-        return mRootView;
-    }
-
-    @Override
-    public void registerListener(Listener listener) {
-        mListeners.add(listener);
-    }
-
-    @Override
-    public void unregisterListener(Listener listener) {
-        mListeners.remove(listener);
-    }
-
-    private Context getContext() {
-        return getRootView().getContext();
-    }
-
-    private <T extends View> T findViewById(int id) {
-        return getRootView().findViewById(id);
-    }
-
-    @Override
     public void onQuestionClicked(Question question) {
-        for (Listener listener : mListeners) {
+        for (Listener listener : getListeners()) {
             listener.onQuestionClicked(question);
         }
     }

@@ -16,7 +16,8 @@
         android:theme="@style/Theme.Mvc">
         <activity
             android:name=".screens.questionslist.listview.QuestionsListActivity"
-            android:exported="false">
+            android:exported="true">
+
         </activity>
         <activity
             android:name=".screens.questionslist.recycler.QuestionsRecyclerListActivity"
