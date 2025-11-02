@@ -1,5 +1,6 @@
-package com.example.mvc.common;
+package com.example.mvc.common.dependencyinjection;
 
+import com.example.mvc.common.Constants;
 import com.example.mvc.networking.StackoverflowApi;
 
 import retrofit2.Retrofit;

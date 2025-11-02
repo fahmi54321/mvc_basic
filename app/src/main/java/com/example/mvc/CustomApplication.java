@@ -2,7 +2,7 @@ package com.example.mvc;
 
 import android.app.Application;
 
-import com.example.mvc.common.CompositionRoot;
+import com.example.mvc.common.dependencyinjection.CompositionRoot;
 
 public class CustomApplication extends Application {
 
