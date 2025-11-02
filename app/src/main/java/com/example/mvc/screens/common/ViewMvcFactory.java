@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
+import com.example.mvc.screens.questionslist.QuestionsListItemMvcImpl;
+import com.example.mvc.screens.questionslist.QuestionsListItemViewMvc;
 import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.listview.QuestionsListViewMvcImpl;
 import com.example.mvc.screens.questionslist.recycler.QuestionsRecyclerMvcImpl;
@@ -17,10 +19,14 @@ public class ViewMvcFactory {
     }
 
     public QuestionsListViewMvc getQuestionsListViewMvc(@Nullable ViewGroup parent){
-        return new QuestionsListViewMvcImpl(layoutInflater,parent);
+        return new QuestionsListViewMvcImpl(layoutInflater,parent, this);
     }
 
     public QuestionsListViewMvc getQuestionsRecyclerViewMvc(@Nullable ViewGroup parent) {
-        return new QuestionsRecyclerMvcImpl(layoutInflater,parent);
+        return new QuestionsRecyclerMvcImpl(layoutInflater,parent, this);
+    }
+
+    public QuestionsListItemViewMvc getQuestionsListItemViewMvc(@Nullable ViewGroup parent){
+        return new QuestionsListItemMvcImpl(layoutInflater,parent);
     }
 }

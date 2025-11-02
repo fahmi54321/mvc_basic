@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.questionslist.QuestionsListItemMvcImpl;
 import com.example.mvc.screens.questionslist.QuestionsListItemViewMvc;
 
@@ -17,6 +18,7 @@ import com.example.mvc.screens.questionslist.QuestionsListItemViewMvc;
 public class QuestionsListViewAdapter extends ArrayAdapter<Question> implements QuestionsListItemViewMvc.Listener {
 
     private final OnQuestionClickListener mOnQuestionClickListener;
+    private final ViewMvcFactory mViewMvcFactory;
 
     @Override
     public void onQuestionClicked(Question question) {
@@ -28,19 +30,19 @@ public class QuestionsListViewAdapter extends ArrayAdapter<Question> implements 
     }
 
     public QuestionsListViewAdapter(Context context,
-                                    OnQuestionClickListener onQuestionClickListener) {
+                                    OnQuestionClickListener onQuestionClickListener,
+                                    ViewMvcFactory viewMvcFactory
+    ) {
         super(context, 0);
         mOnQuestionClickListener = onQuestionClickListener;
+        mViewMvcFactory = viewMvcFactory;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            QuestionsListItemViewMvc viewMvc = new QuestionsListItemMvcImpl(
-                    LayoutInflater.from(getContext()),
-                    parent
-            );
+            QuestionsListItemViewMvc viewMvc = mViewMvcFactory.getQuestionsListItemViewMvc(parent);
             viewMvc.registerListener(this);
             convertView = viewMvc.getRootView();
             convertView.setTag(viewMvc);

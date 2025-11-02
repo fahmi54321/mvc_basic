@@ -7,6 +7,7 @@ import android.widget.ListView;
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
 import com.example.mvc.screens.common.BaseObservableViewMvc;
+import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.adapter.listview.QuestionsListViewAdapter;
 
@@ -16,10 +17,11 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
 
     private final ListView mLstQuestions;
     private final QuestionsListViewAdapter mQuestionsListViewAdapter;
-    public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+
+    public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup, ViewMvcFactory viewMvcFactory) {
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup, false));
         mLstQuestions = findViewById(R.id.lst_questions);
-        mQuestionsListViewAdapter = new QuestionsListViewAdapter(getContext(), this);
+        mQuestionsListViewAdapter = new QuestionsListViewAdapter(getContext(), this, viewMvcFactory);
         mLstQuestions.setAdapter(mQuestionsListViewAdapter);
     }
     @Override
