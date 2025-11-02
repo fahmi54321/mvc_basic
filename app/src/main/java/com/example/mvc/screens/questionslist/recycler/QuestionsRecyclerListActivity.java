@@ -32,7 +32,7 @@ public class QuestionsRecyclerListActivity extends BaseActivity implements Quest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewMvc = new QuestionsRecyclerMvcImpl(LayoutInflater.from(this),null);
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsRecyclerViewMvc(null);
         mViewMvc.registerListener(this);
 
         mStackoverflowApi = getCompositionRoot().getStackoverflowApi();
