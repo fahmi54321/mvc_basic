@@ -1,5 +1,6 @@
 package com.example.mvc.screens.questionslist;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
