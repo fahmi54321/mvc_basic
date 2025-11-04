@@ -30,6 +30,7 @@ public class QuestionsRecyclerListActivity extends BaseActivity implements Quest
     protected void onStart() {
         super.onStart();
         fetchQuestionListUseCase.registerListener(this);
+        mViewMvc.showProgressIndication();
         fetchQuestionListUseCase.fetchQuestionAndNotify();
     }
 
@@ -47,10 +48,12 @@ public class QuestionsRecyclerListActivity extends BaseActivity implements Quest
     @Override
     public void onQuestionFetchFailed() {
         Toast.makeText(this, R.string.error_network_call_failed, Toast.LENGTH_SHORT).show();
+        mViewMvc.hideProgressIndication();
     }
 
     @Override
     public void onQuestionFetched(List<Question> questions) {
         mViewMvc.bindQuestions(questions);
+        mViewMvc.hideProgressIndication();
     }
 }

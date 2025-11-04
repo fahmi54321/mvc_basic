@@ -1,8 +1,10 @@
 package com.example.mvc.screens.questionslist.listview;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
@@ -18,9 +20,12 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
     private final ListView mLstQuestions;
     private final QuestionsListViewAdapter mQuestionsListViewAdapter;
 
+    private final ProgressBar mProgressBar;
+
     public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup, ViewMvcFactory viewMvcFactory) {
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup, false));
         mLstQuestions = findViewById(R.id.lst_questions);
+        mProgressBar = findViewById(R.id.progress);
         mQuestionsListViewAdapter = new QuestionsListViewAdapter(getContext(), this, viewMvcFactory);
         mLstQuestions.setAdapter(mQuestionsListViewAdapter);
     }
@@ -36,5 +41,15 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
         mQuestionsListViewAdapter.clear();
         mQuestionsListViewAdapter.addAll(questions);
         mQuestionsListViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProgressIndication() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressIndication() {
+        mProgressBar.setVisibility(View.GONE);
     }
 }
