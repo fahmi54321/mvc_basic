@@ -20,7 +20,9 @@
             android:exported="false" />
         <activity
             android:name=".screens.questionslist.listview.QuestionsListActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".screens.questionslist.recycler.QuestionsRecyclerListActivity"
             android:exported="true">

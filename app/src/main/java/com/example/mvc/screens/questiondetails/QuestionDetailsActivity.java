@@ -47,7 +47,7 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     @Override
     protected void onStop() {
         super.onStop();
-        fetchQuestionDetailsUseCase.registerListener(this);
+        fetchQuestionDetailsUseCase.unregisterListener(this);
     }
 
     private String getQuestionId() {

@@ -1,34 +1,23 @@
 package com.example.mvc.screens.questionslist.listview;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.example.mvc.R;
-import com.example.mvc.common.Constants;
-import com.example.mvc.networking.QuestionSchema;
-import com.example.mvc.networking.QuestionsListResponseSchema;
-import com.example.mvc.networking.StackoverflowApi;
+import com.example.mvc.questions.FetchQuestionListUseCase;
 import com.example.mvc.questions.Question;
 import com.example.mvc.screens.common.BaseActivity;
 import com.example.mvc.screens.questiondetails.QuestionDetailsActivity;
 import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvc.Listener, FetchQuestionListUseCase.Listener {
 
-public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvc.Listener {
-
-    private StackoverflowApi mStackoverflowApi;
 
     private QuestionsListViewMvc mViewMvc;
+
+    private FetchQuestionListUseCase fetchQuestionListUseCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,57 +25,35 @@ public class QuestionsListActivity extends BaseActivity implements QuestionsList
         mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsListViewMvc(null);
         mViewMvc.registerListener(this);
 
-        mStackoverflowApi = getCompositionRoot().getStackoverflowApi();
+        fetchQuestionListUseCase = getCompositionRoot().getFetchQuestionListUseCase();
         setContentView(mViewMvc.getRootView());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        fetchQuestions();
+        fetchQuestionListUseCase.registerListener(this);
+        fetchQuestionListUseCase.fetchQuestionAndNotify();
     }
 
     @Override
     protected void onStop() {
-        mViewMvc.unregisterListener(this);
         super.onStop();
-    }
-
-    private void fetchQuestions() {
-        mStackoverflowApi.fetchLastActiveQuestions(Constants.QUESTIONS_LIST_PAGE_SIZE)
-                .enqueue(new Callback<QuestionsListResponseSchema>() {
-                    @Override
-                    public void onResponse(Call<QuestionsListResponseSchema> call, Response<QuestionsListResponseSchema> response) {
-                        Log.e("response",""+response.body());
-                        if (response.isSuccessful()) {
-                            bindQuestions(response.body().getQuestions());
-                        } else {
-                            networkCallFailed();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<QuestionsListResponseSchema> call, Throwable t) {
-                        networkCallFailed();
-                        Log.e("response Throwable",""+t);
-                    }
-                } );
-    }
-
-    private void bindQuestions(List<QuestionSchema> questionSchemas) {
-        List<Question> questions = new ArrayList<>(questionSchemas.size());
-        for (QuestionSchema questionSchema : questionSchemas) {
-            questions.add(new Question(questionSchema.getId(), questionSchema.getTitle()));
-        }
-        mViewMvc.bindQuestions(questions);
-    }
-
-    private void networkCallFailed() {
-        Toast.makeText(this, R.string.error_network_call_failed, Toast.LENGTH_SHORT).show();
+        fetchQuestionListUseCase.unregisterListener(this);
     }
 
     @Override
     public void onQuestionClicked(Question question) {
         QuestionDetailsActivity.start(this,question.getId());
+    }
+
+    @Override
+    public void onQuestionFetchFailed() {
+        Toast.makeText(this, R.string.error_network_call_failed, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onQuestionFetched(List<Question> questions) {
+        mViewMvc.bindQuestions(questions);
     }
 }
