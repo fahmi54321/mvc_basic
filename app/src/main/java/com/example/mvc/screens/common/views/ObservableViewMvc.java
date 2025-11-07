@@ -1,4 +1,4 @@
-package com.example.mvc.screens.common;
+package com.example.mvc.screens.common.views;
 
 public interface ObservableViewMvc<ListenerType> extends ViewMvc{
     void registerListener(ListenerType listener);

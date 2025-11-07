@@ -3,15 +3,10 @@ package com.example.mvc.screens.questiondetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.mvc.R;
-import com.example.mvc.questions.FetchQuestionDetailsUseCase;
-import com.example.mvc.questions.QuestionDetails;
-import com.example.mvc.screens.common.BaseActivity;
-import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
+import com.example.mvc.screens.common.controller.BaseActivity;
 
 
 public class QuestionDetailsActivity extends BaseActivity {

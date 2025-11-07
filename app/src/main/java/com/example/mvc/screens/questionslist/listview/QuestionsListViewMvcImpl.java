@@ -8,9 +8,9 @@ import android.widget.ProgressBar;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.BaseObservableViewMvc;
+import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.common.ViewMvcFactory;
-import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
+import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.adapter.listview.QuestionsListViewAdapter;
 
 import java.util.List;

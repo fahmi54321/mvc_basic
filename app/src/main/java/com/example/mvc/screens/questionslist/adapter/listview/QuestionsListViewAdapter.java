@@ -1,7 +1,6 @@
 package com.example.mvc.screens.questionslist.adapter.listview;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,8 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.example.mvc.questions.Question;
 import com.example.mvc.screens.common.ViewMvcFactory;
-import com.example.mvc.screens.questionslist.QuestionsListItemMvcImpl;
-import com.example.mvc.screens.questionslist.QuestionsListItemViewMvc;
+import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListItemViewMvc;
 
 
 public class QuestionsListViewAdapter extends ArrayAdapter<Question> implements QuestionsListItemViewMvc.Listener {

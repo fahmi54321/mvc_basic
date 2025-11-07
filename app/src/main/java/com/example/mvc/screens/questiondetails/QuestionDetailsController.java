@@ -2,18 +2,18 @@ package com.example.mvc.screens.questiondetails;
 
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.QuestionDetails;
-import com.example.mvc.screens.common.MessagesDisplayer;
+import com.example.mvc.screens.common.toasthelper.ToastHelper;
 
 public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Listener {
 
     private final FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase;
-    private final MessagesDisplayer messagesDisplayer;
+    private final ToastHelper toastHelper;
 
     private QuestionDetailsViewMvc mViewMvc;
 
-    public QuestionDetailsController(FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase, MessagesDisplayer messagesDisplayer) {
+    public QuestionDetailsController(FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase, ToastHelper toastHelper) {
         this.fetchQuestionDetailsUseCase = fetchQuestionDetailsUseCase;
-        this.messagesDisplayer = messagesDisplayer;
+        this.toastHelper = toastHelper;
     }
 
     public void onStart(String id){
@@ -38,6 +38,6 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
     @Override
     public void onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        messagesDisplayer.showUseCaseError();
+        toastHelper.showUseCaseError();
     }
 }

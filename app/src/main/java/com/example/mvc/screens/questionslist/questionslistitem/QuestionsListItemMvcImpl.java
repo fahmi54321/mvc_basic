@@ -1,17 +1,12 @@
-package com.example.mvc.screens.questionslist;
+package com.example.mvc.screens.questionslist.questionslistitem;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.BaseObservableViewMvc;
-import com.example.mvc.screens.common.BaseViewMvc;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 
 public class QuestionsListItemMvcImpl extends BaseObservableViewMvc<QuestionsListItemViewMvc.Listener> implements QuestionsListItemViewMvc {
     private Question mQuestion;

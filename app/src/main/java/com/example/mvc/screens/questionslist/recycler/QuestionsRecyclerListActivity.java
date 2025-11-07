@@ -6,9 +6,9 @@ import android.widget.Toast;
 import com.example.mvc.R;
 import com.example.mvc.questions.FetchQuestionListUseCase;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.BaseActivity;
+import com.example.mvc.screens.common.controller.BaseActivity;
 import com.example.mvc.screens.questiondetails.QuestionDetailsActivity;
-import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
+import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 
 import java.util.List;
 

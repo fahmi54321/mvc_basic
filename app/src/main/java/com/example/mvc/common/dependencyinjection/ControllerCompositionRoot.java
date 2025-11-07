@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
-import com.example.mvc.screens.common.MessagesDisplayer;
-import com.example.mvc.screens.common.ScreensNavigator;
+import com.example.mvc.screens.common.toasthelper.ToastHelper;
+import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.questiondetails.QuestionDetailsController;
 import com.example.mvc.screens.questionslist.QuestionsListController;
@@ -59,8 +59,8 @@ public class ControllerCompositionRoot {
         return new ScreensNavigator(getContext());
     }
 
-    private MessagesDisplayer getMessagesDisplayer(){
-        return new MessagesDisplayer(getContext());
+    private ToastHelper getMessagesDisplayer(){
+        return new ToastHelper(getContext());
     }
 
     public QuestionDetailsController getQuestionDetailsController() {

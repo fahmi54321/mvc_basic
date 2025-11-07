@@ -1,9 +1,9 @@
-package com.example.mvc.screens.common;
+package com.example.mvc.screens.common.controller;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mvc.CustomApplication;
+import com.example.mvc.common.CustomApplication;
 import com.example.mvc.common.dependencyinjection.ControllerCompositionRoot;
 
 public class BaseActivity extends AppCompatActivity {

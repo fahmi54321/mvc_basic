@@ -1,4 +1,4 @@
-package com.example.mvc.screens.common;
+package com.example.mvc.screens.common.views;
 
 import java.util.Collections;
 import java.util.HashSet;

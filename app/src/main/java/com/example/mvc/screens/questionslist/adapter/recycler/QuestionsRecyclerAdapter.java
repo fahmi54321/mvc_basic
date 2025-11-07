@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvc.questions.Question;
 import com.example.mvc.screens.common.ViewMvcFactory;
-import com.example.mvc.screens.questionslist.QuestionsListItemViewMvc;
+import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListItemViewMvc;
 
 import java.util.ArrayList;
 import java.util.List;

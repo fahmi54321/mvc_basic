@@ -2,9 +2,9 @@ package com.example.mvc.screens.questionslist.listview;
 
 import android.os.Bundle;
 
-import com.example.mvc.screens.common.BaseActivity;
+import com.example.mvc.screens.common.controller.BaseActivity;
 import com.example.mvc.screens.questionslist.QuestionsListController;
-import com.example.mvc.screens.questionslist.QuestionsListViewMvc;
+import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 
 public class QuestionsListActivity extends BaseActivity {
     private QuestionsListController questionsListController;

@@ -2,21 +2,22 @@ package com.example.mvc.screens.questionslist;
 
 import com.example.mvc.questions.FetchQuestionListUseCase;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.MessagesDisplayer;
-import com.example.mvc.screens.common.ScreensNavigator;
+import com.example.mvc.screens.common.toasthelper.ToastHelper;
+import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
+import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 
 import java.util.List;
 
 public class QuestionsListController implements QuestionsListViewMvc.Listener, FetchQuestionListUseCase.Listener  {
     private final FetchQuestionListUseCase fetchQuestionListUseCase;
     private final ScreensNavigator mScreensNavigator;
-    private final MessagesDisplayer mMessagesDisplayer;
+    private final ToastHelper mToastHelper;
     private QuestionsListViewMvc mViewMvc;
 
-    public QuestionsListController(FetchQuestionListUseCase fetchQuestionListUseCase, ScreensNavigator mScreensNavigator, MessagesDisplayer mMessagesDisplayer) {
+    public QuestionsListController(FetchQuestionListUseCase fetchQuestionListUseCase, ScreensNavigator mScreensNavigator, ToastHelper mToastHelper) {
         this.fetchQuestionListUseCase = fetchQuestionListUseCase;
         this.mScreensNavigator = mScreensNavigator;
-        this.mMessagesDisplayer = mMessagesDisplayer;
+        this.mToastHelper = mToastHelper;
     }
 
     public void bindView(QuestionsListViewMvc mViewMvc){
@@ -41,7 +42,7 @@ public class QuestionsListController implements QuestionsListViewMvc.Listener, F
 
     @Override
     public void onQuestionFetchFailed() {
-        mMessagesDisplayer.showUseCaseError();
+        mToastHelper.showUseCaseError();
         mViewMvc.hideProgressIndication();
     }
 
