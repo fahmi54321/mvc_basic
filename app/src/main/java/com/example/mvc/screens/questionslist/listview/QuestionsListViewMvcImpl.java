@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.common.navdrawer.BaseNavDrawerViewMvc;
+import com.example.mvc.screens.common.navdrawer.DrawerItems;
 import com.example.mvc.screens.common.toolbar.ToolbarViewMvc;
 import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.common.ViewMvcFactory;
@@ -18,7 +20,7 @@ import com.example.mvc.screens.questionslist.adapter.listview.QuestionsListViewA
 
 import java.util.List;
 
-public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewAdapter.OnQuestionClickListener, QuestionsListViewMvc {
+public class QuestionsListViewMvcImpl extends BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewAdapter.OnQuestionClickListener, QuestionsListViewMvc {
 
     private final ListView mLstQuestions;
     private final QuestionsListViewAdapter mQuestionsListViewAdapter;
@@ -30,6 +32,7 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
     private ToolbarViewMvc mToolbarViewMvc;
 
     public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup, ViewMvcFactory viewMvcFactory) {
+        super(layoutInflater, viewGroup);
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup, false));
         mLstQuestions = findViewById(R.id.lst_questions);
         mProgressBar = findViewById(R.id.progress);
@@ -64,5 +67,16 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
     @Override
     public void hideProgressIndication() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDrawerItemClicked(DrawerItems item) {
+        for(Listener listener: getListeners()){
+            switch (item){
+                case QUESTIONS_LIST:{
+                    listener.onQuestionsListClicked();
+                }
+            }
+        }
     }
 }

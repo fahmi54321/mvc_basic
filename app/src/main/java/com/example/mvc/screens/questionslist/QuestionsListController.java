@@ -41,6 +41,11 @@ public class QuestionsListController implements QuestionsListViewMvc.Listener, F
     }
 
     @Override
+    public void onQuestionsListClicked() {
+        // this is the questions list screen, no-op
+    }
+
+    @Override
     public void onQuestionFetchFailed() {
         mToastHelper.showUseCaseError();
         mViewMvc.hideProgressIndication();
