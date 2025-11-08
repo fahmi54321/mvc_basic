@@ -6,8 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
+import com.example.mvc.screens.common.toolbar.ToolbarViewMvc;
 import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
@@ -22,12 +25,22 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
 
     private final ProgressBar mProgressBar;
 
+    private final Toolbar mToolbar;
+
+    private ToolbarViewMvc mToolbarViewMvc;
+
     public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup, ViewMvcFactory viewMvcFactory) {
         setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup, false));
         mLstQuestions = findViewById(R.id.lst_questions);
         mProgressBar = findViewById(R.id.progress);
+        mToolbar = findViewById(R.id.toolbar);
+
         mQuestionsListViewAdapter = new QuestionsListViewAdapter(getContext(), this, viewMvcFactory);
         mLstQuestions.setAdapter(mQuestionsListViewAdapter);
+
+        mToolbarViewMvc = viewMvcFactory.getToolbarViewMvc(viewGroup);
+        mToolbarViewMvc.setTitle("Test");
+        mToolbar.addView(mToolbarViewMvc.getRootView());
     }
     @Override
     public void onQuestionClicked(Question question) {

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.mvc.screens.common.controller.BaseActivity;
 
 
-public class QuestionDetailsActivity extends BaseActivity {
+public class QuestionDetailsActivity extends BaseActivity implements QuestionDetailsViewMvc.Listener {
 
     public static final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
 
@@ -21,10 +21,12 @@ public class QuestionDetailsActivity extends BaseActivity {
 
     private QuestionDetailsController mQuestionDetailsController;
 
+    private QuestionDetailsViewMvc mViewMvc;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        QuestionDetailsViewMvc mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null);
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null);
 
         mQuestionDetailsController = getCompositionRoot().getQuestionDetailsController();
         mQuestionDetailsController.bindView(mViewMvc);
@@ -34,6 +36,7 @@ public class QuestionDetailsActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        mViewMvc.registerListener(this);
         mQuestionDetailsController.onStart(getQuestionId());
 
     }
@@ -41,10 +44,16 @@ public class QuestionDetailsActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        mViewMvc.unregisterListener(this);
         mQuestionDetailsController.onStop();
     }
 
     private String getQuestionId() {
         return getIntent().getStringExtra(EXTRA_QUESTION_ID);
+    }
+
+    @Override
+    public void onNavigateUpClicked() {
+        onBackPressed();
     }
 }
