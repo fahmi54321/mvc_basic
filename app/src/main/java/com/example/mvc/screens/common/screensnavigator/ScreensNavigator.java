@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.mvc.screens.questiondetails.QuestionDetailsActivity;
 import com.example.mvc.screens.questionslist.listview.QuestionsListActivity;
+import com.example.mvc.screens.questionslist.recycler.QuestionsRecyclerListActivity;
 
 public class ScreensNavigator {
     private final Context mContext;
@@ -18,5 +19,9 @@ public class ScreensNavigator {
 
     public void toQuestionsListClearTop() {
         QuestionsListActivity.startClearTop(mContext);
+    }
+
+    public void toQuestionsRecyclerClearTop() {
+        QuestionsRecyclerListActivity.startClearTop(mContext);
     }
 }
