@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
@@ -56,7 +58,7 @@ public class ControllerCompositionRoot {
     }
 
     private ScreensNavigator getScreensNavigator(){
-        return new ScreensNavigator(getContext());
+        return new ScreensNavigator(activity);
     }
 
     private ToastHelper getMessagesDisplayer(){

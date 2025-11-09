@@ -1,7 +1,5 @@
 package com.example.mvc.screens.questiondetails;
 
-import static com.example.mvc.screens.common.navdrawer.DrawerItems.QUESTIONS_LIST;
-
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.QuestionDetails;
 import com.example.mvc.screens.common.navdrawer.DrawerItems;
@@ -53,7 +51,7 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
 
     @Override
     public void onNavigateUpClicked() {
-        onBackPressed();
+        mScreensNavigator.onBackPressed();
     }
 
     public void onDrawerItemClicked(DrawerItems item) {
