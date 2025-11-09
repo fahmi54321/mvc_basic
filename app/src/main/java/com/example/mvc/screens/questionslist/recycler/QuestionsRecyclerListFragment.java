@@ -19,7 +19,7 @@ public class QuestionsRecyclerListFragment extends BaseFragment implements BackP
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        QuestionsListViewMvc viewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsListViewMvc(null);
+        QuestionsListViewMvc viewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsListViewMvc(container);
         questionsListController = getCompositionRoot().getQuestionsListController();
         questionsListController.bindView(viewMvc);
         return viewMvc.getRootView();
