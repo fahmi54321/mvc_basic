@@ -15,16 +15,24 @@ public class ToolbarViewMvc extends BaseViewMvc {
         void onNavigateUpClicked();
     }
 
+    public interface HamburgerClicklistener{
+        void onHamburgerClicked();
+    }
+
     private final TextView mTxtTitle;
     private final ImageButton mBtnBack;
+    private final ImageButton mBtnHamburger;
 
     private NavigateUpClickListener mNavigateUpClickListener;
+    private HamburgerClicklistener mHamburgerClicklistener;
 
     public ToolbarViewMvc(LayoutInflater layoutInflater, ViewGroup viewGroup) {
         setRootView(layoutInflater.inflate(R.layout.layout_toolbar, viewGroup, false));
         mTxtTitle = findViewById(R.id.txt_toolbar_title);
         mBtnBack = findViewById(R.id.btn_back);
+        mBtnHamburger = findViewById(R.id.btn_hamburger);
         mBtnBack.setOnClickListener(view -> mNavigateUpClickListener.onNavigateUpClicked());
+        mBtnHamburger.setOnClickListener(v -> mHamburgerClicklistener.onHamburgerClicked());
     }
 
     public void setTitle(String title){
@@ -32,7 +40,18 @@ public class ToolbarViewMvc extends BaseViewMvc {
     }
 
     public void enableUpButtonAndListen(NavigateUpClickListener navigateUpClickListener) {
+        if(mNavigateUpClickListener != null){
+            throw new RuntimeException("hamburger and up shouldn't be shown together");
+        }
         mNavigateUpClickListener = navigateUpClickListener;
         mBtnBack.setVisibility(View.VISIBLE);
+    }
+
+    public void enableHamburgerButtonAndListen(HamburgerClicklistener hamburgerClicklistener){
+        if(mHamburgerClicklistener != null){
+            throw new RuntimeException("hamburger and up shouldn't be shown together");
+        }
+        mHamburgerClicklistener = hamburgerClicklistener;
+        mBtnHamburger.setVisibility(View.VISIBLE);
     }
 }

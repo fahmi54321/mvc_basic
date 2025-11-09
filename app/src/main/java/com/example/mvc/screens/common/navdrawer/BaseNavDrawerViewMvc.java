@@ -1,10 +1,12 @@
 package com.example.mvc.screens.common.navdrawer;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.mvc.R;
@@ -33,6 +35,10 @@ public abstract class BaseNavDrawerViewMvc<ListenerType> extends BaseObservableV
     }
 
     protected abstract void onDrawerItemClicked(DrawerItems items);
+
+    protected void openDrawer(){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
 
     @Override
     public void setRootView(View mRootView) {
