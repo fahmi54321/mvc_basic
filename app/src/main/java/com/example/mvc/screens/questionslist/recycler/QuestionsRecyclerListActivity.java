@@ -36,4 +36,11 @@ public class QuestionsRecyclerListActivity extends BaseActivity{
         super.onStop();
         questionsListController.onStop();
     }
+
+    @Override
+    public void onBackPressed() {
+        if(!questionsListController.onBackPressed()){
+            super.onBackPressed();
+        }
+    }
 }

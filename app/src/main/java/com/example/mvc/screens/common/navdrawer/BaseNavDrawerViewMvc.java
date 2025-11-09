@@ -1,6 +1,5 @@
 package com.example.mvc.screens.common.navdrawer;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import com.example.mvc.R;
 import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.google.android.material.navigation.NavigationView;
 
-public abstract class BaseNavDrawerViewMvc<ListenerType> extends BaseObservableViewMvc<ListenerType> {
+public abstract class BaseNavDrawerViewMvc<ListenerType> extends BaseObservableViewMvc<ListenerType> implements NavDrawerViewMvc {
 
     private final DrawerLayout drawerLayout;
     private final FrameLayout frameLayout;
@@ -36,8 +35,19 @@ public abstract class BaseNavDrawerViewMvc<ListenerType> extends BaseObservableV
 
     protected abstract void onDrawerItemClicked(DrawerItems items);
 
-    protected void openDrawer(){
+    @Override
+    public void openDrawer(){
         drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void closeDrawer() {
+        drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public boolean isDrawerOpen() {
+        return drawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
     @Override

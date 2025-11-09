@@ -56,4 +56,13 @@ public class QuestionsListController implements QuestionsListViewMvc.Listener, F
         mViewMvc.bindQuestions(questions);
         mViewMvc.hideProgressIndication();
     }
+
+    public boolean onBackPressed() {
+        if(mViewMvc.isDrawerOpen()){
+            mViewMvc.closeDrawer();
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

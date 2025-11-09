@@ -7,9 +7,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.example.mvc.screens.common.controller.BaseActivity;
+import com.example.mvc.screens.common.navdrawer.DrawerItems;
 
 
-public class QuestionDetailsActivity extends BaseActivity implements QuestionDetailsViewMvc.Listener {
+public class QuestionDetailsActivity extends BaseActivity{
 
     public static final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
 
@@ -21,12 +22,10 @@ public class QuestionDetailsActivity extends BaseActivity implements QuestionDet
 
     private QuestionDetailsController mQuestionDetailsController;
 
-    private QuestionDetailsViewMvc mViewMvc;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null);
+        QuestionDetailsViewMvc mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null);
 
         mQuestionDetailsController = getCompositionRoot().getQuestionDetailsController();
         mQuestionDetailsController.bindView(mViewMvc);
@@ -36,7 +35,6 @@ public class QuestionDetailsActivity extends BaseActivity implements QuestionDet
     @Override
     protected void onStart() {
         super.onStart();
-        mViewMvc.registerListener(this);
         mQuestionDetailsController.onStart(getQuestionId());
 
     }
@@ -44,7 +42,6 @@ public class QuestionDetailsActivity extends BaseActivity implements QuestionDet
     @Override
     protected void onStop() {
         super.onStop();
-        mViewMvc.unregisterListener(this);
         mQuestionDetailsController.onStop();
     }
 
@@ -53,7 +50,9 @@ public class QuestionDetailsActivity extends BaseActivity implements QuestionDet
     }
 
     @Override
-    public void onNavigateUpClicked() {
-        onBackPressed();
+    public void onBackPressed() {
+        if(!mQuestionDetailsController.onBackPressed()){
+            super.onBackPressed();
+        }
     }
 }

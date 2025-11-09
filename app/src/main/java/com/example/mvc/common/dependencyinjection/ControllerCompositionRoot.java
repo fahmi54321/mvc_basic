@@ -66,7 +66,8 @@ public class ControllerCompositionRoot {
     public QuestionDetailsController getQuestionDetailsController() {
         return new QuestionDetailsController(
                 getFetchQuestionDetailsUseCase(),
-                getMessagesDisplayer()
+                getMessagesDisplayer(),
+                getScreensNavigator()
         );
     }
 }
