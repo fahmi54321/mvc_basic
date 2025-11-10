@@ -7,14 +7,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.example.mvc.screens.common.controller.BackPressedListener;
 import com.example.mvc.screens.common.controller.BaseFragment;
 import com.example.mvc.screens.questionslist.QuestionsListController;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 
-public class QuestionsRecyclerListFragment extends BaseFragment implements BackPressedListener {
+public class QuestionsRecyclerListFragment extends BaseFragment{
     private QuestionsListController questionsListController;
+
+    public static Fragment newInstance() {
+        return new QuestionsRecyclerListFragment();
+    }
 
     @Nullable
     @Override
@@ -35,10 +39,5 @@ public class QuestionsRecyclerListFragment extends BaseFragment implements BackP
     public void onStop() {
         super.onStop();
         questionsListController.onStop();
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        return questionsListController.onBackPressed();
     }
 }

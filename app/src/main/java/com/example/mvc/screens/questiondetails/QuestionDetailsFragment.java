@@ -1,7 +1,5 @@
 package com.example.mvc.screens.questiondetails;
 
-import static com.example.mvc.screens.questiondetails.QuestionDetailsActivity.ARG_QUESTION_ID;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mvc.screens.common.controller.BackPressedListener;
 import com.example.mvc.screens.common.controller.BaseFragment;
 
-public class QuestionDetailsFragment extends BaseFragment implements BackPressedListener {
+public class QuestionDetailsFragment extends BaseFragment{
+    public static final String ARG_QUESTION_ID = "ARG_QUESTION_ID";
     private QuestionDetailsController mQuestionDetailsController;
 
     public static QuestionDetailsFragment newInstance(String questionId){
@@ -49,10 +47,5 @@ public class QuestionDetailsFragment extends BaseFragment implements BackPressed
 
     private String getQuestionId() {
         return getArguments().getString(ARG_QUESTION_ID);
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        return mQuestionDetailsController.onBackPressed();
     }
 }

@@ -1,14 +1,16 @@
 package com.example.mvc.common.dependencyinjection;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
+import com.example.mvc.screens.common.controller.BackPressDispatcher;
+import com.example.mvc.screens.common.controller.FragmentFrameWrapper;
 import com.example.mvc.screens.common.toasthelper.ToastHelper;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 import com.example.mvc.screens.common.ViewMvcFactory;
@@ -18,19 +20,50 @@ import com.example.mvc.screens.questionslist.QuestionsListController;
 public class ControllerCompositionRoot {
 
     private final CompositionRoot mCompositionRoot;
-    private final Activity activity;
+    private final FragmentActivity activity;
 
-    public ControllerCompositionRoot(CompositionRoot mCompositionRoot, Activity activity) {
+    public ControllerCompositionRoot(CompositionRoot mCompositionRoot, FragmentActivity activity) {
         this.mCompositionRoot = mCompositionRoot;
         this.activity = activity;
     }
 
-    public StackoverflowApi getStackoverflowApi() {
-        return mCompositionRoot.getStackoverflowApi();
+    private FragmentActivity getActivity(){
+        return activity;
     }
 
     private LayoutInflater getLayoutInflater(){
-        return LayoutInflater.from(activity);
+        return LayoutInflater.from(getActivity());
+    }
+
+    private Context getContext(){
+        return getActivity();
+    }
+
+    private FragmentManager getFragmentManager(){
+        return getActivity().getSupportFragmentManager();
+    }
+
+    private FragmentFrameWrapper getFragmentFrameWrapper(){
+        return (FragmentFrameWrapper) getActivity();
+    }
+
+    private BackPressDispatcher getBackPressDispatcher(){
+        return (BackPressDispatcher) getActivity();
+    }
+
+    private ScreensNavigator getScreensNavigator(){
+        return new ScreensNavigator(
+                getFragmentManager(),
+                getFragmentFrameWrapper()
+        );
+    }
+
+    private ToastHelper getToastHelper(){
+        return new ToastHelper(getContext());
+    }
+
+    public StackoverflowApi getStackoverflowApi() {
+        return mCompositionRoot.getStackoverflowApi();
     }
 
     public ViewMvcFactory getViewMvcFactory(){
@@ -49,27 +82,17 @@ public class ControllerCompositionRoot {
         return new QuestionsListController(
                 getFetchQuestionListUseCase(),
                 getScreensNavigator(),
-                getMessagesDisplayer()
+                getToastHelper(),
+                getBackPressDispatcher()
         );
-    }
-
-    private Context getContext(){
-        return activity;
-    }
-
-    private ScreensNavigator getScreensNavigator(){
-        return new ScreensNavigator(activity);
-    }
-
-    private ToastHelper getMessagesDisplayer(){
-        return new ToastHelper(getContext());
     }
 
     public QuestionDetailsController getQuestionDetailsController() {
         return new QuestionDetailsController(
                 getFetchQuestionDetailsUseCase(),
-                getMessagesDisplayer(),
-                getScreensNavigator()
+                getToastHelper(),
+                getScreensNavigator(),
+                getBackPressDispatcher()
         );
     }
 }
