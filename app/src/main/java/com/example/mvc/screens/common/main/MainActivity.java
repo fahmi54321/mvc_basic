@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mvc.R;
 import com.example.mvc.screens.common.controller.BackPressDispatcher;
 import com.example.mvc.screens.common.controller.BackPressedListener;
 import com.example.mvc.screens.common.controller.BaseActivity;
 import com.example.mvc.screens.common.controller.FragmentFrameWrapper;
-import com.example.mvc.screens.questionslist.listview.QuestionsListFragment;
+import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,16 +19,15 @@ public class MainActivity extends BaseActivity implements BackPressDispatcher, F
 
     private final Set<BackPressedListener> mBackPressedListeners = new HashSet<>();
 
+    private ScreensNavigator mScreensNavigator;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_content_frame);
-        QuestionsListFragment fragment;
+        mScreensNavigator = getCompositionRoot().getScreensNavigator();
         if(savedInstanceState == null){
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragment = new QuestionsListFragment();
-            fragmentTransaction.add(R.id.frame_content, fragment);
-            fragmentTransaction.commit();
+            mScreensNavigator.toQuestionsList();
         }
     }
 

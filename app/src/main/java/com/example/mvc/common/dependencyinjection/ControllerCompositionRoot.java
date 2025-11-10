@@ -11,6 +11,7 @@ import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
 import com.example.mvc.screens.common.controller.BackPressDispatcher;
 import com.example.mvc.screens.common.controller.FragmentFrameWrapper;
+import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameHelper;
 import com.example.mvc.screens.common.toasthelper.ToastHelper;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 import com.example.mvc.screens.common.ViewMvcFactory;
@@ -51,10 +52,17 @@ public class ControllerCompositionRoot {
         return (BackPressDispatcher) getActivity();
     }
 
-    private ScreensNavigator getScreensNavigator(){
+    public ScreensNavigator getScreensNavigator(){
         return new ScreensNavigator(
-                getFragmentManager(),
-                getFragmentFrameWrapper()
+                getFragmentFrameHelper()
+        );
+    }
+
+    private FragmentFrameHelper getFragmentFrameHelper(){
+        return new FragmentFrameHelper(
+                getActivity(),
+                getFragmentFrameWrapper(),
+                getFragmentManager()
         );
     }
 
