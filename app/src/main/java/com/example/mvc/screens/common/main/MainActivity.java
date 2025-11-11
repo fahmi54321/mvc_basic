@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 
 import com.example.mvc.screens.common.controller.BaseActivity;
-import com.example.mvc.screens.common.controller.FragmentFrameWrapper;
+import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameWrapper;
 import com.example.mvc.screens.common.navdrawer.NavDrawerHelper;
 import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvc;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
