@@ -10,17 +10,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.navdrawer.BaseNavDrawerViewMvc;
+import com.example.mvc.screens.common.navdrawer.NavDrawerHelper;
+import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvcImpl;
 import com.example.mvc.screens.common.navdrawer.DrawerItems;
 import com.example.mvc.screens.common.toolbar.ToolbarViewMvc;
-import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.common.ViewMvcFactory;
+import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.adapter.listview.QuestionsListViewAdapter;
 
 import java.util.List;
 
-public class QuestionsListViewMvcImpl extends BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewAdapter.OnQuestionClickListener, QuestionsListViewMvc {
+public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewAdapter.OnQuestionClickListener, QuestionsListViewMvc {
 
     private final ListView mLstQuestions;
     private final QuestionsListViewAdapter mQuestionsListViewAdapter;
@@ -29,11 +30,14 @@ public class QuestionsListViewMvcImpl extends BaseNavDrawerViewMvc<QuestionsList
 
     private final Toolbar mToolbar;
 
+    private final NavDrawerHelper mNavDrawerHelper;
+
     private ToolbarViewMvc mToolbarViewMvc;
 
-    public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup, ViewMvcFactory viewMvcFactory) {
-        super(layoutInflater, viewGroup);
-        setRootView(layoutInflater.inflate(R.layout.layout_questions_list,viewGroup, false));
+    public QuestionsListViewMvcImpl(LayoutInflater layoutInflater, ViewGroup viewGroup, ViewMvcFactory viewMvcFactory, NavDrawerHelper mNavDrawerHelper) {
+        this.mNavDrawerHelper = mNavDrawerHelper;
+
+        setRootView(layoutInflater.inflate(R.layout.layout_questions_list, viewGroup, false));
         mLstQuestions = findViewById(R.id.lst_questions);
         mProgressBar = findViewById(R.id.progress);
         mToolbar = findViewById(R.id.toolbar);
@@ -45,11 +49,12 @@ public class QuestionsListViewMvcImpl extends BaseNavDrawerViewMvc<QuestionsList
         mToolbarViewMvc.setTitle("Test");
         mToolbar.addView(mToolbarViewMvc.getRootView());
 
-        mToolbarViewMvc.enableHamburgerButtonAndListen(() -> openDrawer());
+        mToolbarViewMvc.enableHamburgerButtonAndListen(() -> mNavDrawerHelper.openDrawer());
     }
+
     @Override
     public void onQuestionClicked(Question question) {
-        for (Listener listener: getListeners()){
+        for (Listener listener : getListeners()) {
             listener.onQuestionClicked(question);
         }
     }
@@ -69,16 +74,5 @@ public class QuestionsListViewMvcImpl extends BaseNavDrawerViewMvc<QuestionsList
     @Override
     public void hideProgressIndication() {
         mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onDrawerItemClicked(DrawerItems item) {
-        for(Listener listener: getListeners()){
-            switch (item){
-                case QUESTIONS_LIST:{
-                    listener.onQuestionsListClicked();
-                }
-            }
-        }
     }
 }

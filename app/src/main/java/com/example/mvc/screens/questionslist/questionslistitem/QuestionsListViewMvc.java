@@ -6,12 +6,10 @@ import com.example.mvc.screens.common.views.ObservableViewMvc;
 
 import java.util.List;
 
-public interface QuestionsListViewMvc extends ObservableViewMvc<QuestionsListViewMvc.Listener>, NavDrawerViewMvc {
+public interface QuestionsListViewMvc extends ObservableViewMvc<QuestionsListViewMvc.Listener> {
 
     public interface Listener {
         void onQuestionClicked(Question question);
-
-        void onQuestionsListClicked();
     }
     void bindQuestions(List<Question> questions);
 

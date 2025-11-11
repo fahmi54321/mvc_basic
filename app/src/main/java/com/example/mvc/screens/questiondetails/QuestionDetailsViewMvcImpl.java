@@ -12,13 +12,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.mvc.R;
 import com.example.mvc.questions.QuestionDetails;
 import com.example.mvc.screens.common.ViewMvcFactory;
-import com.example.mvc.screens.common.navdrawer.BaseNavDrawerViewMvc;
-import com.example.mvc.screens.common.navdrawer.DrawerItems;
 import com.example.mvc.screens.common.toolbar.ToolbarViewMvc;
 import com.example.mvc.screens.common.views.BaseObservableViewMvc;
-import com.example.mvc.screens.common.views.BaseViewMvc;
 
-public class QuestionDetailsViewMvcImpl extends BaseNavDrawerViewMvc<QuestionDetailsViewMvc.Listener> implements QuestionDetailsViewMvc {
+public class QuestionDetailsViewMvcImpl extends BaseObservableViewMvc<QuestionDetailsViewMvc.Listener> implements QuestionDetailsViewMvc {
 
     private final TextView mTxtQuestionTitle;
     private final TextView mTxtQuestionBody;
@@ -29,7 +26,6 @@ public class QuestionDetailsViewMvcImpl extends BaseNavDrawerViewMvc<QuestionDet
     private final ToolbarViewMvc mToolbarViewMvc;
 
     public QuestionDetailsViewMvcImpl(LayoutInflater inflater, ViewGroup container, ViewMvcFactory viewMvcFactory) {
-        super(inflater,container);
         setRootView(inflater.inflate(R.layout.layout_questions_details, container, false));
 
         mTxtQuestionTitle = findViewById(R.id.txt_question_title);
@@ -68,13 +64,5 @@ public class QuestionDetailsViewMvcImpl extends BaseNavDrawerViewMvc<QuestionDet
     @Override
     public void hideProgressIndication() {
         mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onDrawerItemClicked(DrawerItems item) {
-        for (Listener listener : getListeners()) {
-            listener.onDrawerItemClicked(item);
-        }
-
     }
 }

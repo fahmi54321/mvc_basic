@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.navdrawer.BaseNavDrawerViewMvc;
+import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvcImpl;
 import com.example.mvc.screens.common.navdrawer.DrawerItems;
 import com.example.mvc.screens.common.toolbar.ToolbarViewMvc;
-import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.common.ViewMvcFactory;
+import com.example.mvc.screens.common.views.BaseObservableViewMvc;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.adapter.recycler.QuestionsRecyclerAdapter;
 
 import java.util.List;
 
-public class QuestionsRecyclerMvcImpl extends BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewMvc, QuestionsRecyclerAdapter.Listener {
+public class QuestionsRecyclerMvcImplImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewMvc, QuestionsRecyclerAdapter.Listener {
 
     private final RecyclerView mRecyclerQuestions;
     private final QuestionsRecyclerAdapter mAdapter;
@@ -33,8 +33,7 @@ public class QuestionsRecyclerMvcImpl extends BaseNavDrawerViewMvc<QuestionsList
 
     private ToolbarViewMvc mToolbarViewMvc;
 
-    public QuestionsRecyclerMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
-        super(inflater,parent);
+    public QuestionsRecyclerMvcImplImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
         setRootView(inflater.inflate(R.layout.layout_questions_list_recycler, parent, false));
 
         mRecyclerQuestions = findViewById(R.id.recycler_questions);
@@ -70,16 +69,5 @@ public class QuestionsRecyclerMvcImpl extends BaseNavDrawerViewMvc<QuestionsList
     @Override
     public void hideProgressIndication() {
         mProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onDrawerItemClicked(DrawerItems item) {
-        for(Listener listener: getListeners()){
-            switch (item){
-                case QUESTIONS_LIST:{
-                    listener.onQuestionsListClicked();
-                }
-            }
-        }
     }
 }

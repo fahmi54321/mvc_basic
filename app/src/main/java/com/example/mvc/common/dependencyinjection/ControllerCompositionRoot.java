@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
-import com.example.mvc.screens.common.controller.BackPressDispatcher;
 import com.example.mvc.screens.common.controller.FragmentFrameWrapper;
 import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameHelper;
+import com.example.mvc.screens.common.navdrawer.NavDrawerHelper;
 import com.example.mvc.screens.common.toasthelper.ToastHelper;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 import com.example.mvc.screens.common.ViewMvcFactory;
@@ -48,10 +48,6 @@ public class ControllerCompositionRoot {
         return (FragmentFrameWrapper) getActivity();
     }
 
-    private BackPressDispatcher getBackPressDispatcher(){
-        return (BackPressDispatcher) getActivity();
-    }
-
     public ScreensNavigator getScreensNavigator(){
         return new ScreensNavigator(
                 getFragmentFrameHelper()
@@ -75,7 +71,11 @@ public class ControllerCompositionRoot {
     }
 
     public ViewMvcFactory getViewMvcFactory(){
-        return new ViewMvcFactory(getLayoutInflater());
+        return new ViewMvcFactory(getLayoutInflater(), getNavDrawerHelper());
+    }
+
+    private NavDrawerHelper getNavDrawerHelper(){
+        return (NavDrawerHelper) getActivity();
     }
 
     public FetchQuestionDetailsUseCase getFetchQuestionDetailsUseCase() {
@@ -90,8 +90,7 @@ public class ControllerCompositionRoot {
         return new QuestionsListController(
                 getFetchQuestionListUseCase(),
                 getScreensNavigator(),
-                getToastHelper(),
-                getBackPressDispatcher()
+                getToastHelper()
         );
     }
 
@@ -99,8 +98,7 @@ public class ControllerCompositionRoot {
         return new QuestionDetailsController(
                 getFetchQuestionDetailsUseCase(),
                 getToastHelper(),
-                getScreensNavigator(),
-                getBackPressDispatcher()
+                getScreensNavigator()
         );
     }
 }
