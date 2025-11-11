@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
+import com.example.mvc.screens.common.dialogs.DialogsManager;
 import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameHelper;
 import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameWrapper;
 import com.example.mvc.screens.common.navdrawer.NavDrawerHelper;
@@ -66,6 +67,10 @@ public class ControllerCompositionRoot {
         return new ToastHelper(getContext());
     }
 
+    private DialogsManager getDialogsManager(){
+        return new DialogsManager(getFragmentManager());
+    }
+
     public StackoverflowApi getStackoverflowApi() {
         return mCompositionRoot.getStackoverflowApi();
     }
@@ -98,7 +103,8 @@ public class ControllerCompositionRoot {
         return new QuestionDetailsController(
                 getFetchQuestionDetailsUseCase(),
                 getToastHelper(),
-                getScreensNavigator()
+                getScreensNavigator(),
+                getDialogsManager()
         );
     }
 }

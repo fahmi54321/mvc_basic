@@ -2,6 +2,7 @@ package com.example.mvc.screens.questiondetails;
 
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.QuestionDetails;
+import com.example.mvc.screens.common.dialogs.DialogsManager;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 import com.example.mvc.screens.common.toasthelper.ToastHelper;
 
@@ -9,17 +10,15 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
 
     private final FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase;
     private final ToastHelper toastHelper;
-
     private final ScreensNavigator mScreensNavigator;
-
+    private final DialogsManager dialogsManager;
     private QuestionDetailsViewMvc mViewMvc;
 
-
-
-    public QuestionDetailsController(FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase, ToastHelper toastHelper, ScreensNavigator mScreensNavigator) {
+    public QuestionDetailsController(FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase, ToastHelper toastHelper, ScreensNavigator mScreensNavigator, DialogsManager dialogsManager) {
         this.fetchQuestionDetailsUseCase = fetchQuestionDetailsUseCase;
         this.toastHelper = toastHelper;
         this.mScreensNavigator = mScreensNavigator;
+        this.dialogsManager = dialogsManager;
     }
 
     public void onStart(String id){
@@ -46,7 +45,7 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
     @Override
     public void onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        toastHelper.showUseCaseError();
+        dialogsManager.showUseCaseErrorDialog("tag");
     }
 
     @Override
