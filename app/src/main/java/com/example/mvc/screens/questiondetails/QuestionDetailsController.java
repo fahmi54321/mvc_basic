@@ -18,6 +18,8 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
     private String questionId;
     private QuestionDetailsViewMvc mViewMvc;
 
+    private static final String DIALOG_ID_NETWORK_ERROR = "DIALOG_ID_NETWORK_ERROR";
+
     public QuestionDetailsController(FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase, ToastHelper toastHelper, ScreensNavigator mScreensNavigator, DialogsManager dialogsManager, DialogsEventBus dialogsEventBus) {
         this.fetchQuestionDetailsUseCase = fetchQuestionDetailsUseCase;
         this.toastHelper = toastHelper;
@@ -35,7 +37,9 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
         fetchQuestionDetailsUseCase.registerListener(this);
         dialogsEventBus.registerListener(this);
         mViewMvc.showProgressIndication();
-        fetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(questionId);
+        if(!DIALOG_ID_NETWORK_ERROR.equals(dialogsManager.getShownDialogTag())) {
+            fetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(questionId);
+        }
     }
     public void onStop(){
         mViewMvc.unregisterListener(this);
@@ -56,7 +60,7 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
     @Override
     public void onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        dialogsManager.showUseCaseErrorDialog(null);
+        dialogsManager.showUseCaseErrorDialog(DIALOG_ID_NETWORK_ERROR);
     }
 
     @Override
