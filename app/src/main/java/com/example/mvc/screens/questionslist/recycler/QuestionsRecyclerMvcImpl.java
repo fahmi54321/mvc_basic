@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvc.R;
 import com.example.mvc.questions.Question;
-import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvcImpl;
-import com.example.mvc.screens.common.navdrawer.DrawerItems;
 import com.example.mvc.screens.common.toolbar.ToolbarViewMvc;
 import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.views.BaseObservableViewMvc;
@@ -22,7 +20,7 @@ import com.example.mvc.screens.questionslist.adapter.recycler.QuestionsRecyclerA
 
 import java.util.List;
 
-public class QuestionsRecyclerMvcImplImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewMvc, QuestionsRecyclerAdapter.Listener {
+public class QuestionsRecyclerMvcImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsListViewMvc, QuestionsRecyclerAdapter.Listener {
 
     private final RecyclerView mRecyclerQuestions;
     private final QuestionsRecyclerAdapter mAdapter;
@@ -33,7 +31,7 @@ public class QuestionsRecyclerMvcImplImpl extends BaseObservableViewMvc<Question
 
     private ToolbarViewMvc mToolbarViewMvc;
 
-    public QuestionsRecyclerMvcImplImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
+    public QuestionsRecyclerMvcImpl(LayoutInflater inflater, @Nullable ViewGroup parent, ViewMvcFactory viewMvcFactory) {
         setRootView(inflater.inflate(R.layout.layout_questions_list_recycler, parent, false));
 
         mRecyclerQuestions = findViewById(R.id.recycler_questions);

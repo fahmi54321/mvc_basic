@@ -8,6 +8,8 @@ import com.example.mvc.screens.common.dialogs.promptdialog.PromptDialogEvent;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 import com.example.mvc.screens.common.toasthelper.ToastHelper;
 
+import java.io.Serializable;
+
 public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Listener, QuestionDetailsViewMvc.Listener, DialogsEventBus.Listener {
 
     private final FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase;
@@ -18,7 +20,14 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
     private String questionId;
     private QuestionDetailsViewMvc mViewMvc;
 
+    private enum ScreenState{
+        IDLE, DETAILS_SHOWN, NETWORK_ERROR
+    }
+
+    private ScreenState mScreenState = ScreenState.IDLE;
+
     private static final String DIALOG_ID_NETWORK_ERROR = "DIALOG_ID_NETWORK_ERROR";
+    public static final String SAVED_STATE_SCREEN_STATE = "SAVED_STATE_SCREEN_STATE";
 
     public QuestionDetailsController(FetchQuestionDetailsUseCase fetchQuestionDetailsUseCase, ToastHelper toastHelper, ScreensNavigator mScreensNavigator, DialogsManager dialogsManager, DialogsEventBus dialogsEventBus) {
         this.fetchQuestionDetailsUseCase = fetchQuestionDetailsUseCase;
@@ -37,7 +46,7 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
         fetchQuestionDetailsUseCase.registerListener(this);
         dialogsEventBus.registerListener(this);
         mViewMvc.showProgressIndication();
-        if(!DIALOG_ID_NETWORK_ERROR.equals(dialogsManager.getShownDialogTag())) {
+        if(mScreenState != ScreenState.NETWORK_ERROR) {
             fetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(questionId);
         }
     }
@@ -47,18 +56,28 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
         fetchQuestionDetailsUseCase.unregisterListener(this);
     }
 
+    public SavedState getSavedState() {
+        return new SavedState(mScreenState);
+    }
+
+    public void restoreSavedState(SavedState savedState) {
+        mScreenState = savedState.mScreenState;
+    }
+
     public void bindView(QuestionDetailsViewMvc mViewMvc){
         this.mViewMvc = mViewMvc;
     }
 
     @Override
     public void onQuestionDetailsFetched(QuestionDetails questionDetails) {
+        mScreenState = ScreenState.DETAILS_SHOWN;
         mViewMvc.hideProgressIndication();
         mViewMvc.bindQuestion(questionDetails);
     }
 
     @Override
     public void onQuestionDetailsFetchFailed() {
+        mScreenState = ScreenState.NETWORK_ERROR;
         mViewMvc.hideProgressIndication();
         dialogsManager.showUseCaseErrorDialog(DIALOG_ID_NETWORK_ERROR);
     }
@@ -73,11 +92,21 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
         if(event instanceof PromptDialogEvent){
             switch (((PromptDialogEvent) event).getClickedButton()){
                 case POSITIVE:
+                    mScreenState = ScreenState.IDLE;
                     fetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(questionId);
                     break;
                 case NEGATIVE:
+                    mScreenState = ScreenState.IDLE;
                     break;
             }
+        }
+    }
+
+    public static class SavedState implements Serializable {
+        private final ScreenState mScreenState;
+
+        public SavedState(ScreenState screenState) {
+            mScreenState = screenState;
         }
     }
 }

@@ -96,7 +96,9 @@ public class ControllerCompositionRoot {
         return new QuestionsListController(
                 getFetchQuestionListUseCase(),
                 getScreensNavigator(),
-                getToastHelper()
+                getToastHelper(),
+                getDialogsManager(),
+                getDialogsEventBus()
         );
     }
 

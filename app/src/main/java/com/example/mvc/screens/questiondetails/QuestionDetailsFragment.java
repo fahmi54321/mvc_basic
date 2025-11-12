@@ -1,6 +1,9 @@
 package com.example.mvc.screens.questiondetails;
 
+import static com.example.mvc.screens.questiondetails.QuestionDetailsController.SAVED_STATE_SCREEN_STATE;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,9 @@ public class QuestionDetailsFragment extends BaseFragment{
         QuestionDetailsViewMvc mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(container);
 
         mQuestionDetailsController = getCompositionRoot().getQuestionDetailsController();
+        if (savedInstanceState != null) {
+            restoreControllerState(savedInstanceState);
+        }
         mQuestionDetailsController.bindView(mViewMvc);
         return mViewMvc.getRootView();
     }
@@ -46,7 +52,20 @@ public class QuestionDetailsFragment extends BaseFragment{
         mQuestionDetailsController.onStop();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SAVED_STATE_SCREEN_STATE, mQuestionDetailsController.getSavedState());
+    }
+
     private String getQuestionId() {
         return getArguments().getString(ARG_QUESTION_ID);
+    }
+
+    private void restoreControllerState(Bundle savedInstanceState) {
+        mQuestionDetailsController.restoreSavedState(
+                (QuestionDetailsController.SavedState)
+                        savedInstanceState.getSerializable(SAVED_STATE_SCREEN_STATE)
+        );
     }
 }

@@ -15,7 +15,7 @@ import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListItem
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListItemViewMvc;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 import com.example.mvc.screens.questionslist.listview.QuestionsListViewMvcImpl;
-import com.example.mvc.screens.questionslist.recycler.QuestionsRecyclerMvcImplImpl;
+import com.example.mvc.screens.questionslist.recycler.QuestionsRecyclerMvcImpl;
 
 public class ViewMvcFactory {
     private final LayoutInflater layoutInflater;
@@ -30,7 +30,7 @@ public class ViewMvcFactory {
     }
 
     public QuestionsListViewMvc getQuestionsRecyclerViewMvc(@Nullable ViewGroup parent) {
-        return new QuestionsRecyclerMvcImplImpl(layoutInflater,parent, this);
+        return new QuestionsRecyclerMvcImpl(layoutInflater,parent, this);
     }
 
     public QuestionsListItemViewMvc getQuestionsListItemViewMvc(@Nullable ViewGroup parent){

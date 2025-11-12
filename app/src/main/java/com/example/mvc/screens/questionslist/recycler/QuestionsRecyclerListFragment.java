@@ -1,5 +1,7 @@
 package com.example.mvc.screens.questionslist.recycler;
 
+import static com.example.mvc.screens.questionslist.QuestionsListController.SAVED_STATE_SCREEN_STATE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,9 @@ public class QuestionsRecyclerListFragment extends BaseFragment{
         QuestionsListViewMvc viewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsListViewMvc(container);
         questionsListController = getCompositionRoot().getQuestionsListController();
         questionsListController.bindView(viewMvc);
+        if(savedInstanceState != null){
+            restoreControllerState(savedInstanceState);
+        }
         return viewMvc.getRootView();
     }
 
@@ -39,5 +44,17 @@ public class QuestionsRecyclerListFragment extends BaseFragment{
     public void onStop() {
         super.onStop();
         questionsListController.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SAVED_STATE_SCREEN_STATE, questionsListController.getSavedState());
+    }
+
+    private void restoreControllerState(Bundle savedInstanceState) {
+        questionsListController.restoreSavedState(
+                (QuestionsListController.SavedState) savedInstanceState.getSerializable(SAVED_STATE_SCREEN_STATE)
+        );
     }
 }
