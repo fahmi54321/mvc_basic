@@ -35,7 +35,8 @@ public class QuestionDetailsFragment extends BaseFragment{
     @Override
     public void onStart() {
         super.onStart();
-        mQuestionDetailsController.onStart(getQuestionId());
+        mQuestionDetailsController.setQuestionId(getQuestionId());
+        mQuestionDetailsController.onStart();
 
     }
 

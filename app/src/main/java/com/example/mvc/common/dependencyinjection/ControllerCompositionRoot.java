@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
+import com.example.mvc.screens.common.dialogs.DialogsEventBus;
 import com.example.mvc.screens.common.dialogs.DialogsManager;
 import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameHelper;
 import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameWrapper;
@@ -104,7 +105,12 @@ public class ControllerCompositionRoot {
                 getFetchQuestionDetailsUseCase(),
                 getToastHelper(),
                 getScreensNavigator(),
-                getDialogsManager()
+                getDialogsManager(),
+                getDialogsEventBus()
         );
+    }
+
+    public DialogsEventBus getDialogsEventBus() {
+        return mCompositionRoot.getDialogsEventBus();
     }
 }

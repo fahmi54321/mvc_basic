@@ -4,6 +4,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.mvc.screens.common.dialogs.infodialog.InfoDialog;
+import com.example.mvc.screens.common.dialogs.promptdialog.PromptDialog;
 
 public class DialogsManager {
     private final FragmentManager fragmentManager;
@@ -13,10 +14,17 @@ public class DialogsManager {
     }
 
     public void showUseCaseErrorDialog(String tag){
-        DialogFragment dialogFragment = InfoDialog.newInfoDialog(
-                "Opps",
-                "error",
-                "Ok"
+//        DialogFragment dialogFragment = InfoDialog.newInfoDialog(
+//                "Opps",
+//                "error",
+//                "Ok"
+//        );
+//        dialogFragment.show(fragmentManager, tag);
+        DialogFragment dialogFragment = PromptDialog.newPromptDialog(
+                "Opss",
+                "Error",
+                "Retry",
+                "Close"
         );
         dialogFragment.show(fragmentManager, tag);
     }

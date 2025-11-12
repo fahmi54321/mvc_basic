@@ -2,12 +2,14 @@ package com.example.mvc.common.dependencyinjection;
 
 import com.example.mvc.common.Constants;
 import com.example.mvc.networking.StackoverflowApi;
+import com.example.mvc.screens.common.dialogs.DialogsEventBus;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CompositionRoot {
     private Retrofit mRetrofit;
+    private DialogsEventBus dialogsEventBus;
     public StackoverflowApi getStackoverflowApi() {
         return getRetrofit().create(StackoverflowApi.class);
     }
@@ -20,5 +22,12 @@ public class CompositionRoot {
                     .build();
         }
         return mRetrofit;
+    }
+
+    public DialogsEventBus getDialogsEventBus() {
+        if(dialogsEventBus == null){
+            dialogsEventBus = new DialogsEventBus();
+        }
+        return dialogsEventBus;
     }
 }
