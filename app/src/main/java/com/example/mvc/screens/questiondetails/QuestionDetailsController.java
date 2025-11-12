@@ -56,7 +56,7 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
     @Override
     public void onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        dialogsManager.showUseCaseErrorDialog("tag");
+        dialogsManager.showUseCaseErrorDialog(null);
     }
 
     @Override

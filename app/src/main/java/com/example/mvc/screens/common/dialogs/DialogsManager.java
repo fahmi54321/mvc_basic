@@ -1,5 +1,6 @@
 package com.example.mvc.screens.common.dialogs;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -13,7 +14,7 @@ public class DialogsManager {
         this.fragmentManager = fragmentManager;
     }
 
-    public void showUseCaseErrorDialog(String tag){
+    public void showUseCaseErrorDialog(@Nullable String tag){
 //        DialogFragment dialogFragment = InfoDialog.newInfoDialog(
 //                "Opps",
 //                "error",
