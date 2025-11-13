@@ -5,6 +5,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
+import com.example.mvc.screens.common.dialogs.infodialog.InfoViewMvc;
+import com.example.mvc.screens.common.dialogs.infodialog.InfoViewMvcImpl;
+import com.example.mvc.screens.common.dialogs.promptdialog.PromptViewMvc;
+import com.example.mvc.screens.common.dialogs.promptdialog.PromptViewMvcImpl;
 import com.example.mvc.screens.common.navdrawer.NavDrawerHelper;
 import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvc;
 import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvcImpl;
@@ -50,5 +54,19 @@ public class ViewMvcFactory {
 
     public NavDrawerViewMvc getNavDrawerViewMvc(@Nullable ViewGroup parent) {
         return new NavDrawerViewMvcImpl(layoutInflater, parent);
+    }
+
+    public PromptViewMvc getPromptViewMvc(@Nullable ViewGroup parent) {
+        return new PromptViewMvcImpl(
+                layoutInflater,
+                parent
+        );
+    }
+
+    public InfoViewMvc getInfoViewMvc(@Nullable ViewGroup parent) {
+        return new InfoViewMvcImpl(
+                layoutInflater,
+                parent
+        );
     }
 }

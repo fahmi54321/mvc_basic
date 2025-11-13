@@ -2,15 +2,12 @@ package com.example.mvc.screens.common.dialogs.infodialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.mvc.R;
 import com.example.mvc.screens.common.dialogs.BaseDialog;
 
-public class InfoDialog extends BaseDialog {
+public class InfoDialog extends BaseDialog implements InfoViewMvc.Listener {
 
     protected static final String ARG_TITLE = "ARG_TITLE";
     protected static final String ARG_MESSAGE = "ARG_MESSAGE";
@@ -26,9 +23,7 @@ public class InfoDialog extends BaseDialog {
         return infoDialog;
     }
 
-    private TextView mTxtTitle;
-    private TextView mTxtMessage;
-    private AppCompatButton mBtnPositive;
+    private InfoViewMvc mViewMvc;
 
     @NonNull
     @Override
@@ -37,22 +32,32 @@ public class InfoDialog extends BaseDialog {
             throw new IllegalStateException("arguments mustn't be null");
         }
 
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getInfoViewMvc(null);
+
         Dialog dialog = new Dialog(requireContext());
-        dialog.setContentView(R.layout.dialog_info);
+        dialog.setContentView(mViewMvc.getRootView());
 
-        mTxtTitle = dialog.findViewById(R.id.txt_title);
-        mTxtMessage = dialog.findViewById(R.id.txt_message);
-        mBtnPositive = dialog.findViewById(R.id.btn_positive);
-
-        mTxtTitle.setText(getArguments().getString(ARG_TITLE));
-        mTxtMessage.setText(getArguments().getString(ARG_MESSAGE));
-        mBtnPositive.setText(getArguments().getString(ARG_BUTTON_CAPTION));
-
-        mBtnPositive.setOnClickListener(v -> onButtonClicked());
+        mViewMvc.setTitle(getArguments().getString(ARG_TITLE));
+        mViewMvc.setMessage(getArguments().getString(ARG_MESSAGE));
+        mViewMvc.setPositiveButtonCaption(getArguments().getString(ARG_BUTTON_CAPTION));
 
         return dialog;
     }
-    protected void onButtonClicked() {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mViewMvc.registerListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mViewMvc.unregisterListener(this);
+    }
+
+    @Override
+    public void onPositiveButtonClicked() {
         dismiss();
     }
 }
