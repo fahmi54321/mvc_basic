@@ -15,4 +15,12 @@ public class ToastHelper {
     public void showUseCaseError() {
         Toast.makeText(mContext, R.string.error_network_call_failed, Toast.LENGTH_SHORT).show();
     }
+
+    public void showDataNotFound() {
+        Toast.makeText(mContext, "Data tidak ada", Toast.LENGTH_SHORT).show();
+    }
+
+    public void showMsgRandom(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
 }

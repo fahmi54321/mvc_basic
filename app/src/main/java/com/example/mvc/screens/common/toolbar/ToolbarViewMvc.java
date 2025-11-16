@@ -19,20 +19,45 @@ public class ToolbarViewMvc extends BaseViewMvc {
         void onHamburgerClicked();
     }
 
+    public interface LocationRequestListener{
+        void onLocationRequestClicked();
+    }
+
+    public interface CameraListener{
+        void onCameraClicked();
+    }
+
+    public interface MediaListener{
+        void onMediaClicked();
+    }
+
     private final TextView mTxtTitle;
     private final ImageButton mBtnBack;
     private final ImageButton mBtnHamburger;
+    private final ImageButton mBtnLocationRequest;
+    private final ImageButton mBtnCamera;
+    private final ImageButton mBtnMedia;
 
     private NavigateUpClickListener mNavigateUpClickListener;
     private HamburgerClicklistener mHamburgerClicklistener;
+
+    private LocationRequestListener mLocationRequestListener;
+    private CameraListener mCameraListener;
+    private MediaListener mMediaListener;
 
     public ToolbarViewMvc(LayoutInflater layoutInflater, ViewGroup viewGroup) {
         setRootView(layoutInflater.inflate(R.layout.layout_toolbar, viewGroup, false));
         mTxtTitle = findViewById(R.id.txt_toolbar_title);
         mBtnBack = findViewById(R.id.btn_back);
         mBtnHamburger = findViewById(R.id.btn_hamburger);
+        mBtnLocationRequest = findViewById(R.id.btn_location);
+        mBtnCamera = findViewById(R.id.btn_camera);
+        mBtnMedia = findViewById(R.id.btn_media);
         mBtnBack.setOnClickListener(view -> mNavigateUpClickListener.onNavigateUpClicked());
         mBtnHamburger.setOnClickListener(v -> mHamburgerClicklistener.onHamburgerClicked());
+        mBtnLocationRequest.setOnClickListener(v -> mLocationRequestListener.onLocationRequestClicked());
+        mBtnCamera.setOnClickListener(v -> mCameraListener.onCameraClicked());
+        mBtnMedia.setOnClickListener(v -> mMediaListener.onMediaClicked());
     }
 
     public void setTitle(String title){
@@ -53,5 +78,20 @@ public class ToolbarViewMvc extends BaseViewMvc {
         }
         mHamburgerClicklistener = hamburgerClicklistener;
         mBtnHamburger.setVisibility(View.VISIBLE);
+    }
+
+    public void enableLocationRequestButtonAndListen(LocationRequestListener listener) {
+        mLocationRequestListener = listener;
+        mBtnLocationRequest.setVisibility(View.VISIBLE);
+    }
+
+    public void enableCameraButtonAndListen(CameraListener listener) {
+        mCameraListener = listener;
+        mBtnCamera.setVisibility(View.VISIBLE);
+    }
+
+    public void enableMediaButtonAndListen(MediaListener listener) {
+        mMediaListener = listener;
+        mBtnMedia.setVisibility(View.VISIBLE);
     }
 }

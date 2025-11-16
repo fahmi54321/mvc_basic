@@ -45,6 +45,22 @@ public class QuestionDetailsViewMvcImpl extends BaseObservableViewMvc<QuestionDe
                 listener.onNavigateUpClicked();
             }
         });
+
+        mToolbarViewMvc.enableLocationRequestButtonAndListen(() -> {
+            for (Listener listener : getListeners()) {
+                listener.onLocationRequestClicked();
+            }
+        });
+        mToolbarViewMvc.enableCameraButtonAndListen(() -> {
+            for(Listener listener: getListeners()){
+                listener.onCameraClicked();
+            }
+        });
+        mToolbarViewMvc.enableMediaButtonAndListen(() -> {
+            for(Listener listener: getListeners()){
+                listener.onMediaClicked();
+            }
+        });
     }
 
     @Override

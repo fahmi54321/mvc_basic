@@ -7,6 +7,12 @@ public interface QuestionDetailsViewMvc extends ObservableViewMvc<QuestionDetail
 
     public interface Listener {
         void onNavigateUpClicked();
+
+        void onLocationRequestClicked();
+
+        void onCameraClicked();
+
+        void onMediaClicked();
     }
     void bindQuestion(QuestionDetails question);
 

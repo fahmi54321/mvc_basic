@@ -39,4 +39,31 @@ public class DialogsManager {
         }
         return null;
     }
+
+    public void showPermissionGrantedDialog(@Nullable String tag) {
+        DialogFragment dialogFragment = InfoDialog.newInfoDialog(
+                "Permission dialog",
+                "Permission granted",
+                "Ok"
+        );
+        dialogFragment.show(fragmentManager, tag);
+    }
+
+    public void showPermissionDeclinedCantAskMoreDialog(@Nullable String tag) {
+        DialogFragment dialogFragment = InfoDialog.newInfoDialog(
+                "Permission dialog",
+                "Permission declined and can't ask anymore",
+                "Ok"
+        );
+        dialogFragment.show(fragmentManager, tag);
+    }
+
+    public void showDeclinedDialog(@Nullable String tag) {
+        DialogFragment dialogFragment = InfoDialog.newInfoDialog(
+                "Permission dialog",
+                "Permission declined",
+                "Ok"
+        );
+        dialogFragment.show(fragmentManager, tag);
+    }
 }

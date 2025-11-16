@@ -3,9 +3,13 @@ package com.example.mvc.common.dependencyinjection;
 import android.content.Context;
 import android.view.LayoutInflater;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.mvc.common.permissions.CameraHelper;
+import com.example.mvc.common.permissions.ImageHelper;
+import com.example.mvc.common.permissions.PermissionsHelper;
 import com.example.mvc.networking.StackoverflowApi;
 import com.example.mvc.questions.FetchQuestionDetailsUseCase;
 import com.example.mvc.questions.FetchQuestionListUseCase;
@@ -22,16 +26,25 @@ import com.example.mvc.screens.questionslist.QuestionsListController;
 
 public class ControllerCompositionRoot {
 
-    private final CompositionRoot mCompositionRoot;
-    private final FragmentActivity activity;
+    private final ActivityCompositionRoot activityCompositionRoot;
+    private final Fragment fragment;
 
-    public ControllerCompositionRoot(CompositionRoot mCompositionRoot, FragmentActivity activity) {
-        this.mCompositionRoot = mCompositionRoot;
-        this.activity = activity;
+    private CameraHelper cameraHelper;
+    private PermissionsHelper permissionsHelper;
+    private ImageHelper imageHelper;
+
+    public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot) {
+        this.activityCompositionRoot = activityCompositionRoot;
+        this.fragment = null;
+    }
+
+    public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot, Fragment fragment) {
+        this.activityCompositionRoot = activityCompositionRoot;
+        this.fragment = fragment;
     }
 
     private FragmentActivity getActivity(){
-        return activity;
+        return activityCompositionRoot.getActivity();
     }
 
     private LayoutInflater getLayoutInflater(){
@@ -39,7 +52,7 @@ public class ControllerCompositionRoot {
     }
 
     private Context getContext(){
-        return getActivity();
+        return activityCompositionRoot.getContext();
     }
 
     private FragmentManager getFragmentManager(){
@@ -73,7 +86,7 @@ public class ControllerCompositionRoot {
     }
 
     public StackoverflowApi getStackoverflowApi() {
-        return mCompositionRoot.getStackoverflowApi();
+        return activityCompositionRoot.getStackoverflowApi();
     }
 
     public ViewMvcFactory getViewMvcFactory(){
@@ -102,17 +115,64 @@ public class ControllerCompositionRoot {
         );
     }
 
+    public PermissionsHelper getPermissionsHelper(){
+        if(fragment != null){
+            if(permissionsHelper == null) {
+                permissionsHelper = new PermissionsHelper(fragment, getContext());
+            }
+            return permissionsHelper;
+        }else{
+            if(permissionsHelper == null) {
+                permissionsHelper = new PermissionsHelper(getActivity(), getContext());
+            }
+            return permissionsHelper;
+        }
+    }
+
+    public CameraHelper getCameraPicker(){
+        if(fragment != null){
+            if(cameraHelper == null){
+                cameraHelper = new CameraHelper(fragment, getContext());
+            }
+            return cameraHelper;
+        }else{
+            if(cameraHelper == null){
+                cameraHelper = new CameraHelper(getActivity(), getContext());
+            }
+            return cameraHelper;
+        }
+    }
+
+    public ImageHelper getImageHelper() {
+        if(fragment != null){
+            if(imageHelper == null){
+                imageHelper = new ImageHelper(fragment, getContext());
+            }
+            return imageHelper;
+        }else{
+            if(imageHelper == null){
+                imageHelper = new ImageHelper(getActivity(), getContext());
+            }
+            return imageHelper;
+        }
+    }
+
+
+
     public QuestionDetailsController getQuestionDetailsController() {
         return new QuestionDetailsController(
                 getFetchQuestionDetailsUseCase(),
                 getToastHelper(),
                 getScreensNavigator(),
                 getDialogsManager(),
-                getDialogsEventBus()
+                getDialogsEventBus(),
+                getPermissionsHelper(),
+                getCameraPicker(),
+                getImageHelper()
         );
     }
 
     public DialogsEventBus getDialogsEventBus() {
-        return mCompositionRoot.getDialogsEventBus();
+        return activityCompositionRoot.getDialogsEventBus();
     }
 }
