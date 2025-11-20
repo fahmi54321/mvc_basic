@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mvc.common.CustomApplication;
 import com.example.mvc.common.dependencyinjection.ActivityCompositionRoot;
-import com.example.mvc.common.dependencyinjection.ControllerCompositionRoot;
+import com.example.mvc.common.dependencyinjection.Injector;
+import com.example.mvc.common.dependencyinjection.PresentationCompositionRoot;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private ControllerCompositionRoot mControllerCompositionRoot;
+    private PresentationCompositionRoot mPresentationCompositionRoot;
 
     private ActivityCompositionRoot mActivityCompositionRoot;
 
@@ -23,12 +24,16 @@ public class BaseActivity extends AppCompatActivity {
         return mActivityCompositionRoot;
     }
 
-    protected ControllerCompositionRoot getCompositionRoot(){
-        if(mControllerCompositionRoot == null){
-            mControllerCompositionRoot = new ControllerCompositionRoot(
+    protected PresentationCompositionRoot getCompositionRoot(){
+        if(mPresentationCompositionRoot == null){
+            mPresentationCompositionRoot = new PresentationCompositionRoot(
                     getActivityCompositionRoot()
             );
         }
-        return mControllerCompositionRoot;
+        return mPresentationCompositionRoot;
+    }
+
+    protected Injector injector(){
+        return new Injector(getCompositionRoot());
     }
 }

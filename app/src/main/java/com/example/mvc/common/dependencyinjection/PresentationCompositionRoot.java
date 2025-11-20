@@ -24,21 +24,20 @@ import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.questiondetails.QuestionDetailsController;
 import com.example.mvc.screens.questionslist.QuestionsListController;
 
-public class ControllerCompositionRoot {
+public class PresentationCompositionRoot {
 
     private final ActivityCompositionRoot activityCompositionRoot;
     private final Fragment fragment;
-
     private CameraHelper cameraHelper;
     private PermissionsHelper permissionsHelper;
     private ImageHelper imageHelper;
 
-    public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot) {
+    public PresentationCompositionRoot(ActivityCompositionRoot activityCompositionRoot) {
         this.activityCompositionRoot = activityCompositionRoot;
         this.fragment = null;
     }
 
-    public ControllerCompositionRoot(ActivityCompositionRoot activityCompositionRoot, Fragment fragment) {
+    public PresentationCompositionRoot(ActivityCompositionRoot activityCompositionRoot, Fragment fragment) {
         this.activityCompositionRoot = activityCompositionRoot;
         this.fragment = fragment;
     }

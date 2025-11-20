@@ -11,23 +11,35 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mvc.common.dependencyinjection.Service;
+import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.controller.BaseFragment;
 import com.example.mvc.screens.questionslist.QuestionsListController;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 
 public class QuestionsListFragment extends BaseFragment{
-    private QuestionsListController questionsListController;
+    @Service
+    private QuestionsListController controller;
+    @Service
+    private ViewMvcFactory viewMvcFactory;
+    public QuestionsListViewMvc viewMvc;
 
     public static Fragment newInstance() {
         return new QuestionsListFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        injector().inject(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        QuestionsListViewMvc viewMvc = getCompositionRoot().getViewMvcFactory().getQuestionsListViewMvc(container);
-        questionsListController = getCompositionRoot().getQuestionsListController();
-        questionsListController.bindView(viewMvc);
+        viewMvc = viewMvcFactory.getQuestionsListViewMvc(container);
+        controller.bindView(viewMvc);
         if(savedInstanceState != null){
             restoreControllerState(savedInstanceState);
         }
@@ -35,7 +47,7 @@ public class QuestionsListFragment extends BaseFragment{
     }
 
     private void restoreControllerState(Bundle savedInstanceState) {
-        questionsListController.restoreSavedState(
+        controller.restoreSavedState(
                 (QuestionsListController.SavedState) savedInstanceState.getSerializable(SAVED_STATE_SCREEN_STATE)
         );
     }
@@ -43,18 +55,18 @@ public class QuestionsListFragment extends BaseFragment{
     @Override
     public void onStart() {
         super.onStart();
-        questionsListController.onStart();
+        controller.onStart();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        questionsListController.onStop();
+        controller.onStop();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(SAVED_STATE_SCREEN_STATE,questionsListController.getSavedState());
+        outState.putSerializable(SAVED_STATE_SCREEN_STATE, controller.getSavedState());
     }
 }

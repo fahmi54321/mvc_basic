@@ -2,19 +2,18 @@ package com.example.mvc.screens.common.dialogs;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.mvc.common.CustomApplication;
-import com.example.mvc.common.dependencyinjection.ControllerCompositionRoot;
+import com.example.mvc.common.dependencyinjection.PresentationCompositionRoot;
 import com.example.mvc.screens.common.main.MainActivity;
 
 public abstract class BaseDialog extends DialogFragment {
-    private ControllerCompositionRoot mControllerCompositionRoot;
+    private PresentationCompositionRoot mPresentationCompositionRoot;
 
-    protected ControllerCompositionRoot getCompositionRoot(){
-        if(mControllerCompositionRoot == null){
-            mControllerCompositionRoot = new ControllerCompositionRoot(
+    protected PresentationCompositionRoot getCompositionRoot(){
+        if(mPresentationCompositionRoot == null){
+            mPresentationCompositionRoot = new PresentationCompositionRoot(
                     ((MainActivity) requireActivity()).getActivityCompositionRoot()
             );
         }
-        return mControllerCompositionRoot;
+        return mPresentationCompositionRoot;
     }
 }

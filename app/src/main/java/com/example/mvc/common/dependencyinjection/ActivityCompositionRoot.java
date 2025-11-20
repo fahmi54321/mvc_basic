@@ -1,5 +1,6 @@
 package com.example.mvc.common.dependencyinjection;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.fragment.app.FragmentActivity;
@@ -9,11 +10,11 @@ import com.example.mvc.screens.common.dialogs.DialogsEventBus;
 
 public class ActivityCompositionRoot {
     private final FragmentActivity activity;
-    private final CompositionRoot compositionRoot;
+    private final AppCompositionRoot appCompositionRoot;
 
-    public ActivityCompositionRoot(FragmentActivity activity, CompositionRoot compositionRoot) {
+    public ActivityCompositionRoot(FragmentActivity activity, AppCompositionRoot appCompositionRoot) {
         this.activity = activity;
-        this.compositionRoot = compositionRoot;
+        this.appCompositionRoot = appCompositionRoot;
     }
 
     public FragmentActivity getActivity(){
@@ -21,14 +22,18 @@ public class ActivityCompositionRoot {
     }
 
     public StackoverflowApi getStackoverflowApi() {
-        return compositionRoot.getStackoverflowApi();
+        return appCompositionRoot.getStackoverflowApi();
     }
 
     public DialogsEventBus getDialogsEventBus() {
-        return compositionRoot.getDialogsEventBus();
+        return appCompositionRoot.getDialogsEventBus();
     }
 
     public Context getContext() {
         return activity;
+    }
+
+    public Application getApplication(){
+        return appCompositionRoot.getApplication();
     }
 }

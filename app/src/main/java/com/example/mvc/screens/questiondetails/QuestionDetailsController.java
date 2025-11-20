@@ -60,18 +60,6 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
         this.imageHelper = imageHelper;
     }
 
-    public void setPermissionAccessFineLocation(ActivityResultLauncher<String> permissionLauncher){
-        this.permissionLauncher = permissionLauncher;
-    }
-
-    public void setCameraLaunchers(ActivityResultLauncher<Intent> cameraLaunchers){
-        this.cameraLaunchers = cameraLaunchers;
-    }
-
-    public void setImageLaunchers(ActivityResultLauncher<PickVisualMediaRequest> imageLaunchers){
-        this.imageLaunchers = imageLaunchers;
-    }
-
 
     public void setQuestionId(String id){
         questionId = id;
@@ -107,6 +95,12 @@ public class QuestionDetailsController implements FetchQuestionDetailsUseCase.Li
 
     public void bindView(QuestionDetailsViewMvc mViewMvc){
         this.mViewMvc = mViewMvc;
+    }
+
+    public void registerLauncher() {
+        this.permissionLauncher = permissionsHelper.registerPermission(ManifestPermission.PERMISSION_ACCESS_FINE_LOCATION);
+        this.cameraLaunchers =  cameraHelper.registerLaunchers();
+        this.imageLaunchers =  imageHelper.registerLaunchers();
     }
 
     @Override

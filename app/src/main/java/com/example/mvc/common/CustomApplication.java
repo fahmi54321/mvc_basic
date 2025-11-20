@@ -2,19 +2,19 @@ package com.example.mvc.common;
 
 import android.app.Application;
 
-import com.example.mvc.common.dependencyinjection.CompositionRoot;
+import com.example.mvc.common.dependencyinjection.AppCompositionRoot;
 
 public class CustomApplication extends Application {
 
-    private CompositionRoot mCompositionRoot;
+    private AppCompositionRoot mAppCompositionRoot;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mCompositionRoot = new CompositionRoot();
+        mAppCompositionRoot = new AppCompositionRoot(this);
     }
 
-    public CompositionRoot getCompositionRoot() {
-        return mCompositionRoot;
+    public AppCompositionRoot getCompositionRoot() {
+        return mAppCompositionRoot;
     }
 }
