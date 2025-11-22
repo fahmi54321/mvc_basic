@@ -5,8 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.dialogs.BaseDialog;
 import com.example.mvc.screens.common.dialogs.DialogsEventBus;
+
+import javax.inject.Inject;
 
 public class PromptDialog extends BaseDialog implements PromptViewMvc.Listener {
     protected static final String ARG_TITLE = "ARG_TITLE";
@@ -25,13 +29,17 @@ public class PromptDialog extends BaseDialog implements PromptViewMvc.Listener {
         return promptDialog;
     }
 
-    private DialogsEventBus mDialogsEventBus;
+    @Inject
+    public DialogsEventBus mDialogsEventBus;
+    @Inject
+    public ViewMvcFactory viewMvcFactory;
     private PromptViewMvc mViewMvc;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDialogsEventBus = getCompositionRoot().getDialogsEventBus();
+        injector().inject(this);
     }
 
     @NonNull
@@ -41,7 +49,7 @@ public class PromptDialog extends BaseDialog implements PromptViewMvc.Listener {
             throw new IllegalStateException("arguments mustn't be null");
         }
 
-        mViewMvc = getCompositionRoot().getViewMvcFactory().getPromptViewMvc(null);
+        mViewMvc = viewMvcFactory.getPromptViewMvc(null);
 
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(mViewMvc.getRootView());

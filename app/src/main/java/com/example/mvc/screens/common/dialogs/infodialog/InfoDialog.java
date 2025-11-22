@@ -4,8 +4,12 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.dialogs.BaseDialog;
+
+import javax.inject.Inject;
 
 public class InfoDialog extends BaseDialog implements InfoViewMvc.Listener {
 
@@ -24,6 +28,14 @@ public class InfoDialog extends BaseDialog implements InfoViewMvc.Listener {
     }
 
     private InfoViewMvc mViewMvc;
+    @Inject
+    public ViewMvcFactory viewMvcFactory;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        injector().inject(this);
+    }
 
     @NonNull
     @Override
@@ -32,7 +44,7 @@ public class InfoDialog extends BaseDialog implements InfoViewMvc.Listener {
             throw new IllegalStateException("arguments mustn't be null");
         }
 
-        mViewMvc = getCompositionRoot().getViewMvcFactory().getInfoViewMvc(null);
+        mViewMvc = viewMvcFactory.getInfoViewMvc(null);
 
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(mViewMvc.getRootView());

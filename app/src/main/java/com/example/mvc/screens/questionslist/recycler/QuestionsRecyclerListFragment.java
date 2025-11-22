@@ -11,17 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.mvc.common.dependencyinjection.Service;
 import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.controller.BaseFragment;
 import com.example.mvc.screens.questionslist.QuestionsListController;
 import com.example.mvc.screens.questionslist.questionslistitem.QuestionsListViewMvc;
 
+import javax.inject.Inject;
+
 public class QuestionsRecyclerListFragment extends BaseFragment{
-    @Service
-    private QuestionsListController controller;
-    @Service
-    private ViewMvcFactory viewMvcFactory;
+    @Inject
+    public QuestionsListController controller;
+    @Inject
+    public ViewMvcFactory viewMvcFactory;
     private QuestionsListViewMvc viewMvc;
 
     public static Fragment newInstance() {

@@ -43,4 +43,7 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    implementation (libs.dagger)
+    annotationProcessor(libs.dagger.compiler)
 }

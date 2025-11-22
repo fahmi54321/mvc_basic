@@ -5,24 +5,30 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 
+import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.controller.BaseActivity;
 import com.example.mvc.screens.common.fragmentframehelper.FragmentFrameWrapper;
 import com.example.mvc.screens.common.navdrawer.NavDrawerHelper;
 import com.example.mvc.screens.common.navdrawer.NavDrawerViewMvc;
 import com.example.mvc.screens.common.screensnavigator.ScreensNavigator;
 
+import javax.inject.Inject;
+
 public class MainActivity extends BaseActivity implements
         FragmentFrameWrapper,
         NavDrawerViewMvc.Listener,
         NavDrawerHelper {
-    private ScreensNavigator mScreensNavigator;
+    @Inject
+    public ScreensNavigator mScreensNavigator;
+    @Inject
+    public ViewMvcFactory viewMvcFactory;
     private NavDrawerViewMvc mViewMvc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mScreensNavigator = getCompositionRoot().getScreensNavigator();
-        mViewMvc = getCompositionRoot().getViewMvcFactory().getNavDrawerViewMvc(null);
+        injector().inject(this);
+        mViewMvc = viewMvcFactory.getNavDrawerViewMvc(null);
         setContentView(mViewMvc.getRootView());
         if (savedInstanceState == null) {
             mScreensNavigator.toQuestionsList();

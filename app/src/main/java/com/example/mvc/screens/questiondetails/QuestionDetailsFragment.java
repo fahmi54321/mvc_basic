@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mvc.common.dependencyinjection.Service;
 import com.example.mvc.screens.common.ViewMvcFactory;
 import com.example.mvc.screens.common.controller.BaseFragment;
 
+import javax.inject.Inject;
+
 public class QuestionDetailsFragment extends BaseFragment{
     public static final String ARG_QUESTION_ID = "ARG_QUESTION_ID";
-    @Service
-    private QuestionDetailsController controller;
-    @Service
-    private ViewMvcFactory viewMvcFactory;
+    @Inject
+    public QuestionDetailsController controller;
+    @Inject
+    public ViewMvcFactory viewMvcFactory;
     private QuestionDetailsViewMvc viewMvc;
 
 
